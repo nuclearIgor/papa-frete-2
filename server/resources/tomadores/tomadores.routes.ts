@@ -1,0 +1,18 @@
+import {Router} from "express";
+import {tomadoresController} from "./tomadores.controller";
+import { validateDataSchemaAndStoreInResLocals } from '../common/middleware/validateSchema.middleware';
+import { RegisterSchema } from '../users/user.protocols';
+import {
+    UpdateDadosDaEmpresaSchema,
+    UpdateDadosDoContatoSchema,
+    UpdateDadosDoEnderecoSchema
+} from './tomadores.protocols';
+
+const tomadoresRouter = Router()
+
+tomadoresRouter.post('/create', validateDataSchemaAndStoreInResLocals(RegisterSchema, 'registerData'), tomadoresController.createTomador)
+tomadoresRouter.patch('/:tomadorId/dados-empresa',  validateDataSchemaAndStoreInResLocals(UpdateDadosDaEmpresaSchema, 'dadosDaEmpresa'), tomadoresController.updateDadosDaEmpresa)
+tomadoresRouter.patch('/:tomadorId/dados-contato', validateDataSchemaAndStoreInResLocals(UpdateDadosDoContatoSchema, 'dadosDoContato'), tomadoresController.updateDadosDoContato)
+tomadoresRouter.patch('/:tomadorId/dados-endereco', validateDataSchemaAndStoreInResLocals(UpdateDadosDoEnderecoSchema, 'dadosDoEndereco'), tomadoresController.updateDadosDoEndereco)
+
+export default tomadoresRouter
