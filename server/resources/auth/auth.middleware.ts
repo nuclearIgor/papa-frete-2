@@ -1,9 +1,6 @@
 import {Request, Response, NextFunction} from "express";
 import {loginDTO, LoginSchema} from "./auth.protocols";
 import { verify } from 'jsonwebtoken'
-import {ApplicationError} from "../common/applicationError";
-import {tomadorRepository} from "../tomadores/tomadores.repository";
-import {prestadorRepository} from "../prestadores/prestadores.repository";
 
 export function validateLoginMiddleware (req: Request, res: Response, next: NextFunction) {
     const data: loginDTO = req.body

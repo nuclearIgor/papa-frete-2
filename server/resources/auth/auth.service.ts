@@ -4,7 +4,6 @@ import {userRepository} from "../users/users.repository";
 import {ApplicationError} from "../common/applicationError";
 import {compare, hash} from "bcrypt";
 import { sign } from 'jsonwebtoken'
-import {User} from "@prisma/client";
 
 async function login({email, senha}: loginDTO) {
     const user = await userRepository.getUserByEmail(email)
