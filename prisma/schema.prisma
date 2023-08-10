@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email        String @unique
+  passwordHash String
+  tipoDeConta  String
+
+  activeSubscription Boolean @default(false)
+  subscriptionTier   String?
+
+  tomador   Tomador?   @relation("TomadorUser")
+  prestador Prestador? @relation("PrestadorUser")
+
+  cadastroCompleto Boolean @default(false)
+
+  // ResetPasswordToken ResetPasswordToken? @relation("ResetTokenUser")
+  @@index([email])
+  @@index([id])
+  @@map("users")
+}
+
+model Tomador {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation("TomadorUser", fields: [userId], references: [id])
+  userId String @unique
+
+  cnpj         String? @unique
+  nomeFantasia String?
+  ramo         String?
+
+  nomeDoContato String?
+  telefone      String?
+
+  cep         String?
+  estado      String?
+  cidade      String?
+  bairro      String?
+  rua         String?
+  numero      String?
+  complemento String?
+
+  Frete Frete[] @relation("TomadorFrete")
+
+  // Frete         Frete[]
+  @@index([cnpj])
+  @@map("tomadores")
+}
+
+model Prestador {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation("PrestadorUser", fields: [userId], references: [id])
+  userId String @unique
+
+  nome     String?
+  cpf      String? @unique
+  telefone String?
+
+  cnh          String?
+  categoriaCNH String?
+
+  tipoDoVeiculo    String?
+  tipoDaCarroceria String?
+
+  anoDeFabricacaoDoVeiculo String?
+  Candidatura              Candidatura[] @relation("PrestadorCandidatura")
+
+  @@index([cpf])
+  @@map("prestadores")
+}
+
+model Frete {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Tomador   Tomador @relation("TomadorFrete", fields: [tomadorId], references: [id])
+  tomadorId String
+
+  coleta  String
+  entrega String
+  oferece String
+
+  ufOrigem     String
+  cidadeOrigem String
+
+  ufDestino     String
+  cidadeDestino String
+
+  tipoDeCarga String
+  observacoes String
+
+  veiculoAlvo    String
+  carroceriaAlvo String
+  Candidatura    Candidatura[] @relation("CandidaturaFrete")
+
+  @@index([tomadorId])
+  @@map("fretes")
+}
+
+model Candidatura {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Frete   Frete  @relation("CandidaturaFrete", fields: [freteId], references: [id])
+  freteId String
+
+  Prestador   Prestador @relation("PrestadorCandidatura", fields: [prestadorId], references: [id])
+  prestadorId String
+
+  AnotacaoCandidatura AnotacaoCandidatura[] @relation("AnotacaoCandidatura")
+
+  aceita   Boolean?
+  aceitaEm DateTime?
+
+  contratada   Boolean   @default(false)
+  contratadaEm DateTime?
+
+  concluida   Boolean   @default(false)
+  concluidaEm DateTime?
+
+  @@index([freteId])
+  @@index([prestadorId])
+  @@map("candidaturas")
+}
+
+model AnotacaoCandidatura {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Candidatura   Candidatura @relation("AnotacaoCandidatura", fields: [candidaturaId], references: [id])
+  candidaturaId String
+
+  text String
+
+  @@index([candidaturaId])
+  @@map("anotacao_candidatura")
+}
