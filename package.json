@@ -7,7 +7,12 @@
     "node": "16.20.0"
   },
   "scripts": {
-    "watch": "dotenv -e .env.development -- ts-node-dev --ignore-watch client --respawn --transpile-only server/src/server.ts"
+    "watch": "dotenv -e .env.development -- ts-node-dev --ignore-watch client --respawn --transpile-only server/src/server.ts",
+    "build:dev": "dotenv -e .env.development npx tsc && npm ci --prefix client && npm run build --prefix client",
+    "start:dev": "dotenv -e .env.development node server/dist/src/server.js",
+    "build:prod": "npm ci && npx tsc && npx prisma migrate deploy && npm ci --prefix client && npm run build --prefix client",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
+    "start:prod": "node server/dist/src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +25,8 @@
     "dotenv-cli": "^7.2.1",
     "express": "^4.18.2",
     "joi": "^17.9.2",
-    "jsonwebtoken": "^9.0.1"
+    "jsonwebtoken": "^9.0.1",
+    "pm2": "^5.3.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
