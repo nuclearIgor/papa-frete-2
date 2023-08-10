@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
+import {errorHandler} from "../resources/common/middleware/errorHandler";
 
 const app = express()
 
@@ -20,4 +21,5 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
+app.use(errorHandler)
 export default app
