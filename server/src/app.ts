@@ -2,8 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import {errorHandler} from "../resources/common/middleware/errorHandler";
+import authRouter from "../resources/auth/auth.routes";
 import tomadoresRouter from "../resources/tomadores/tomadores.routes";
 import prestadoresRouter from "../resources/prestadores/prestadores.routes";
+import fretesRouter from "../resources/fretes/fretes.routes";
 
 const app = express()
 
@@ -14,8 +16,10 @@ app.use(cors({
 app.use(express.json())
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
+app.use('/api/auth', authRouter)
 app.use('/api/tomadores', tomadoresRouter)
 app.use('/api/prestadores', prestadoresRouter)
+app.use('/api/fretes', fretesRouter)
 
 app.get("/api/status", (req, res) => {
     return res.json({msg: 'hello world'})
