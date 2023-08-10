@@ -14,8 +14,8 @@ export interface CreateFreteDTO {
     tipoDeCarga: string
     observacoes: string
 
-    veiculoAlvo: string | null
-    carroceriaAlvo: string | null
+    veiculoAlvo: string
+    carroceriaAlvo: string
 }
 
 export const CreateFreteSchema = Joi.object({

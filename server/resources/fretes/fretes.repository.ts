@@ -39,8 +39,17 @@ async function fetchFretesByTomadorId (tomadorId: string) {
     })
 }
 
+async function fetchFreteById (freteId: string) {
+    return prisma.frete.findUnique({
+        where: {
+            id: freteId
+        }
+    })
+}
+
 export const fretesRepository = {
     createFrete,
     fetchAllFretes,
-    fetchFretesByTomadorId
+    fetchFretesByTomadorId,
+    fetchFreteById
 }

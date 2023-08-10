@@ -6,6 +6,7 @@ import authRouter from "../resources/auth/auth.routes";
 import tomadoresRouter from "../resources/tomadores/tomadores.routes";
 import prestadoresRouter from "../resources/prestadores/prestadores.routes";
 import fretesRouter from "../resources/fretes/fretes.routes";
+import candidaturasRouter from "../resources/candidaturas/candidaturas.routes";
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/tomadores', tomadoresRouter)
 app.use('/api/prestadores', prestadoresRouter)
 app.use('/api/fretes', fretesRouter)
+app.use('/api/candidaturas', candidaturasRouter)
 
 app.get("/api/status", (req, res) => {
     return res.json({msg: 'hello world'})
