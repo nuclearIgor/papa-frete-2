@@ -1,4 +1,5 @@
 import FreteCard from "./FreteCard.jsx";
+import Filtros from "./Filtros.jsx";
 
 const fretes = [
     {
@@ -96,8 +97,8 @@ const fretes = [
         oferece: "pernoite,descarga",
         ufOrigem: "PR",
         cidadeOrigem: "Curitiba",
-        ufDestino: "PR",
-        cidadeDestino: "Curitiba",
+        ufDestino: "SP",
+        cidadeDestino: "Franca",
         tipoDeCarga: "seca",
         observacoes: "precisa lona",
         veiculoAlvo: "truck",
@@ -109,7 +110,7 @@ const FretesPage = () => {
     return (
         <div className={'flex p-6 gap-2'}>
             <div className={'basis-3/12'}>
-                <h5 >filte por preferencias</h5>
+                <Filtros/>
             </div>
 
             <div className={'basis-9/12'}>
