@@ -9,3 +9,7 @@ details summary {
 details summary > * {
     display: inline;
 }
+
+.pageHeight {
+    height: calc(100vh - 5rem);
+}
