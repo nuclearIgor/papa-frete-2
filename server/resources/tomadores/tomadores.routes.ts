@@ -7,6 +7,7 @@ import {
     UpdateDadosDoContatoSchema,
     UpdateDadosDoEnderecoSchema
 } from './tomadores.protocols';
+import {validateToken} from "../auth/auth.middleware";
 
 const tomadoresRouter = Router()
 
@@ -14,5 +15,6 @@ tomadoresRouter.post('/create', validateDataSchemaAndStoreInResLocals(RegisterSc
 tomadoresRouter.patch('/:tomadorId/dados-empresa',  validateDataSchemaAndStoreInResLocals(UpdateDadosDaEmpresaSchema, 'dadosDaEmpresa'), tomadoresController.updateDadosDaEmpresa)
 tomadoresRouter.patch('/:tomadorId/dados-contato', validateDataSchemaAndStoreInResLocals(UpdateDadosDoContatoSchema, 'dadosDoContato'), tomadoresController.updateDadosDoContato)
 tomadoresRouter.patch('/:tomadorId/dados-endereco', validateDataSchemaAndStoreInResLocals(UpdateDadosDoEnderecoSchema, 'dadosDoEndereco'), tomadoresController.updateDadosDoEndereco)
+tomadoresRouter.get('/me', validateToken, tomadoresController.getTomadorByuserId)
 
 export default tomadoresRouter

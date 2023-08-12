@@ -70,7 +70,7 @@ async function getTomadorByUserId(userId: string) {
            user: {
                id: userId
            }
-        },
+        }
     })
 }
 

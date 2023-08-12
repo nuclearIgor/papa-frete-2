@@ -47,10 +47,21 @@ async function updateDadosDoEndereco (req: Request, res: Response, next: NextFun
         next(e)
     }
 }
+async function getTomadorByuserId (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
+    console.log(userId)
+    try {
+        const tomador = await tomadoresService.getTomadorByuserId(userId)
+        return res.json({tomador})
+    } catch (e) {
+        next(e)
+    }
+}
 
 export const tomadoresController = {
     createTomador,
     updateDadosDoEndereco,
     updateDadosDaEmpresa,
-    updateDadosDoContato
+    updateDadosDoContato,
+    getTomadorByuserId
 }

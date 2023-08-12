@@ -47,9 +47,19 @@ async function updateDadosDoEndereco (data: UpdateDadosDoEnderecoDTO, tomadorId:
     }
 }
 
+async function getTomadorByuserId (userId: string) {
+    try {
+        return await tomadorRepository.getTomadorByUserId(userId)
+    } catch (e: any) {
+        console.log(e)
+        throw new ApplicationError(e.message, 400)
+    }
+}
+
 export const tomadoresService = {
     createTomador,
     updateDadosDoEndereco,
     updateDadosDaEmpresa,
-    updateDadosDoContato
+    updateDadosDoContato,
+    getTomadorByuserId
 }
