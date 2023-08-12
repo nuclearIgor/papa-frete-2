@@ -3,6 +3,7 @@ import Joi from "joi";
 export interface UpdateDadosPessoaisDTO {
     nomeCompleto: string;
     cpf: string;
+    ddd: string;
     celular: string;
     cnh: string;
     categoriaCNH: string;
@@ -11,7 +12,8 @@ export interface UpdateDadosPessoaisDTO {
 export const UpdateDadosPessoaisSchema = Joi.object({
     nomeCompleto: Joi.string().min(6).required(),
     cpf: Joi.string().length(11).required(),
-    celular: Joi.string().length(15).required(),
+    ddd: Joi.string().length(2).required(),
+    celular: Joi.string().length(10).required(),
     cnh: Joi.string().length(11).required(),
     categoriaCNH: Joi.any().valid(
         'A', 'B', 'C', 'D', 'E', 'F'

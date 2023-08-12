@@ -6,6 +6,7 @@ import DadosDeAutenticacaoForm from '../DadosDeAutenticacaoForm.jsx';
 import DadosPessoaisForm from './DadosPessoaisForm.jsx';
 import DadosDoVeiculoForm from './DadosDoVeiculoForm.jsx';
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from "../../../../components/Loading.jsx";
 
 const CadastroPrestadorPage = () => {
     const [formState, setFormState] = useState(0);
@@ -68,6 +69,9 @@ const CadastroPrestadorPage = () => {
             setPrestadorData({ ...prestador });
 
             toast.success('sucesso');
+
+            setLoading(false);
+            setFormState(2);
         } catch (e) {
             console.log(e);
             toast.error('algo deu errado \n tente novamente em alguns minutos');
@@ -103,6 +107,8 @@ const CadastroPrestadorPage = () => {
             setFormState(prevState => prevState - 1);
         }
     }
+
+    if (loading) return <LoadingScreen/>
 
     return (
         // <div className={'container h-screen mx-auto flex flex-col'}>

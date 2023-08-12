@@ -73,10 +73,14 @@ model Prestador {
 
   nome     String?
   cpf      String? @unique
+  ddd      String?
   telefone String?
 
   cnh          String?
   categoriaCNH String?
+
+  placaDoVeiculo String?
+  anttDoVeiculo  String?
 
   tipoDoVeiculo    String?
   tipoDaCarroceria String?
