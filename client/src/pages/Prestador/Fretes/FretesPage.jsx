@@ -1,5 +1,7 @@
 import FreteCard from "./FreteCard.jsx";
 import Filtros from "./Filtros.jsx";
+import {useEffect} from "react";
+import Cookie from "universal-cookie/es6";
 
 const fretes = [
     {
@@ -105,8 +107,15 @@ const fretes = [
         carroceriaAlvo: "bau"
     }
 ]
+const cookies = new Cookie();
 
 const FretesPage = () => {
+
+    useEffect(() => {
+        const userData = cookies.get('userData')
+        console.log(userData)
+    }, [])
+
     return (
         <div className={'flex p-6 gap-2'}>
             <div className={'basis-3/12'}>
@@ -114,7 +123,7 @@ const FretesPage = () => {
             </div>
 
             <div className={'basis-9/12'}>
-                {fretes.map(frete => <FreteCard frete={frete}/>)}
+                {fretes.map((frete, i) => <FreteCard key={`${frete.id}${i}`} frete={frete}/>)}
             </div>
         </div>
     );

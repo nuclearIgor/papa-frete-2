@@ -72,7 +72,7 @@ const Filtros = () => {
                     className={'select select-bordered'}
                 >
                     <option value="cidade" disabled>Cidade</option>
-                    {ufOrigem !== 'estado' && ESTADOS[`${ufOrigem}`].map(item =>
+                    {ufDestino !== 'estado' && ESTADOS[`${ufDestino}`].map(item =>
                         <option value={item.nome} key={item.nome}>{item.nome}</option>)}
                 </select>
             </div>

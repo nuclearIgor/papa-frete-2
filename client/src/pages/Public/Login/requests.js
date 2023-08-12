@@ -1,5 +1,5 @@
 import axios from "axios";
-import {baseUrl} from "../../App.jsx";
+import {baseUrl} from "../../../App.jsx";
 
 export async function login (loginData) {
     try {

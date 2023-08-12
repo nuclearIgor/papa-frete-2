@@ -1,9 +1,9 @@
 import LoginForm from "./LoginForm.jsx";
 import {login} from "./requests.js";
 import {useContext, useState} from "react";
-import LoadingScreen from "../../components/Loading.jsx";
+import LoadingScreen from "../../../components/Loading.jsx";
 import toast from "react-hot-toast";
-import {AuthContext} from "../../contexts/AuthContext/AuthContextProvider.jsx";
+import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
 
 const LoginPage = () => {
     const [loading, setLoading ] = useState(false)

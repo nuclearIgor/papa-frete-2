@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
         cookies.set('userData', JSON.stringify({ ...userData }));
 
         if (from === '/') {
-            navigate('/home');
+            navigate('/fretes');
             return;
         }
 
