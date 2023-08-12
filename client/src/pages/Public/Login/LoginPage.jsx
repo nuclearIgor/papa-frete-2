@@ -15,6 +15,7 @@ const LoginPage = () => {
         setLoading(true)
 
         const data = await login(values)
+        console.log('data: ', data)
 
         if (!data) {
             toast.error('algo deu errado :( \ntente novamente em alguns minutos')

@@ -3,11 +3,11 @@ import PublicNavBar from "../components/navBar/PublicNavBar.jsx";
 import PublicRoute from "./PublicRoute.jsx";
 import LoginPage from "../pages/Public/Login/LoginPage.jsx";
 import AuthenticatedRoute from "./AuthenticatedRoute.jsx";
-import PrestadorNavBar from "../components/navBar/index.jsx";
 import FretesPage from "../pages/Prestador/Fretes/FretesPage.jsx";
 import CadastroPage from "../pages/Public/Cadastro/CadastroPage.jsx";
 import CadastroPrestadorPage from "../pages/Public/Cadastro/CadastroPrestador/CadastroPrestadorPage.jsx";
 import CadastroTomadorPage from "../pages/Public/Cadastro/CadastroTomador/CadastroTomadorPage.jsx";
+import PrivateNavbar from "../components/navBar/PrivateNavbar.jsx";
 
 const AppRouter = () => {
     return (
@@ -47,7 +47,7 @@ const AppRouter = () => {
                 />
             </Route>
 
-            <Route path={'/fretes'} element={<PrestadorNavBar/>}>
+            <Route path={'/fretes'} element={<PrivateNavbar/>}>
                 <Route
                     index={true}
                     element={

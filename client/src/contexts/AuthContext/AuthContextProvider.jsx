@@ -28,28 +28,14 @@ export const AuthProvider = ({ children }) => {
     const handleLogin = async (loginData, from) => {
         // console.log('logindata: \n', loginData)
         const { token } = loginData;
-        const { userData } = loginData;
 
         cookies.set('token', token);
 
-        setUserData({ ...userData });
+        setUserData(loginData);
         setToken(token);
 
-        if (userData.tipoDeConta === 'prestador') {
-            const res = await axios.get(`${baseUrl}/api/prestadores/me`, {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-            });
-
-            setUserData({
-                ...userData,
-                prestador: res.data.prestador,
-            });
-        }
-
         cookies.remove('userData')
-        cookies.set('userData', JSON.stringify({ ...userData }));
+        cookies.set('userData', JSON.stringify(userData));
 
         if (from === '/') {
             navigate('/fretes');
