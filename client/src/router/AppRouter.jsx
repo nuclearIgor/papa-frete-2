@@ -7,6 +7,7 @@ import PrestadorNavBar from "../components/navBar/index.jsx";
 import FretesPage from "../pages/Prestador/Fretes/FretesPage.jsx";
 import CadastroPage from "../pages/Public/Cadastro/CadastroPage.jsx";
 import CadastroPrestadorPage from "../pages/Public/Cadastro/CadastroPrestador/CadastroPrestadorPage.jsx";
+import CadastroTomadorPage from "../pages/Public/Cadastro/CadastroTomador/CadastroTomadorPage.jsx";
 
 const AppRouter = () => {
     return (
@@ -33,6 +34,14 @@ const AppRouter = () => {
                     element={
                         <PublicRoute>
                             <CadastroPrestadorPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path={'/cadastro/tomador'}
+                    element={
+                        <PublicRoute>
+                            <CadastroTomadorPage />
                         </PublicRoute>
                     }
                 />

@@ -33,8 +33,6 @@ const DadosDeAutenticacaoForm = ({ onSubmit, loading }) => {
                         <span className="label-text">Email</span>
                     </label>
 
-                    <p className={'text-red-500'}>{errors?.email?.message}</p>
-
                     <input
                         name="email"
                         id="email"
@@ -43,14 +41,19 @@ const DadosDeAutenticacaoForm = ({ onSubmit, loading }) => {
                         placeholder={'email'}
                         className="input input-bordered w-full max-w-xs"
                     />
+
+                    {errors?.email ? (
+                        <p className={'text-red-500'}>
+                            {errors?.email?.message}
+                        </p>
+                    ) : null}
+
                 </div>
 
                 <div className="form-control w-full max-w-xs mt-4">
                     <label className="label">
                         <span className="label-text">Senha</span>
                     </label>
-
-                    <p className={'text-red-500'}>{errors?.senha?.message}</p>
 
                     <input
                         name="senha"
@@ -60,6 +63,13 @@ const DadosDeAutenticacaoForm = ({ onSubmit, loading }) => {
                         placeholder={'senha'}
                         className="input input-bordered w-full max-w-xs"
                     />
+
+                    {errors?.senha ? (
+                        <p className={'text-red-500'}>
+                            {errors?.senha?.message}
+                        </p>
+                    ) : null}
+
                 </div>
 
                 <div className="flex mt-4 justify-center">
