@@ -13,6 +13,7 @@ export const UpdateDadosDaEmpresaSchema = Joi.object({
 })
 
 export interface UpdateDadosDoContatoDTO {
+    ddd: string;
     celular: string;
     nomeDoContato: string;
 }
@@ -28,7 +29,8 @@ export interface UpdateDadosDoEnderecoDTO {
 }
 
 export const UpdateDadosDoContatoSchema = Joi.object({
-    celular: Joi.string().length(15).required(),
+    ddd: Joi.string().length(2).required(),
+    celular: Joi.string().length(10).required(),
     nomeDoContato: Joi.string().required(),
 })
 

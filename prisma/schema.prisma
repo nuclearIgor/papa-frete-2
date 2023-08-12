@@ -46,6 +46,7 @@ model Tomador {
   ramo         String?
 
   nomeDoContato String?
+  ddd           String?
   telefone      String?
 
   cep         String?

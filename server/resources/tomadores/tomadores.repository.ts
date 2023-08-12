@@ -43,12 +43,13 @@ async function updateDadosDoEndereco ({uf, numero, cep, bairro, logradouro, loca
     })
 }
 
-async function updateDadosDoContato ({celular, nomeDoContato}: UpdateDadosDoContatoDTO, tomadorId: string) {
+async function updateDadosDoContato ({ddd, celular, nomeDoContato}: UpdateDadosDoContatoDTO, tomadorId: string) {
     return prisma.tomador.update({
         where: {
             id: tomadorId
         },
         data: {
+            ddd,
             telefone: celular,
             nomeDoContato
         }
