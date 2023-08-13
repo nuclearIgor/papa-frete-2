@@ -137,7 +137,8 @@ const FretesPage = () => {
             </div>
 
             <div className={'basis-9/12'}>
-                {fretes.map((frete, i) => <FreteCard key={`${frete.id}${i}`} frete={frete}/>)}
+                {/*{fretes.map((frete, i) => <FreteCard key={`${frete.id}${i}`} frete={frete}/>)}*/}
+                {data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)}
             </div>
         </div>
     );
