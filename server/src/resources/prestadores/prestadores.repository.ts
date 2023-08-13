@@ -1,4 +1,4 @@
-import { prisma } from "../../database";
+import { prisma } from "../../../database";
 import {UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO} from "./prestadores.protocols";
 
 async function updateDadosPessoais ({nomeCompleto, cpf, ddd, celular, cnh, categoriaCNH}: UpdateDadosPessoaisDTO, prestadorId: string) {

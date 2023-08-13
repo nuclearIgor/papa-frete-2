@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {RxAvatar} from "react-icons/rx";
 import {Link, Outlet, useLocation} from "react-router-dom";
 import {AuthContext} from "../../contexts/AuthContext/AuthContextProvider.jsx";
@@ -8,7 +8,11 @@ import TomadorLinks from "./TomadorLinks.jsx";
 const PrivateNavbar = () => {
     const { pathname } = useLocation()
 
-    const { userData, handleLogout } = useContext(AuthContext)
+    const { userData, handleLogout, handleReload } = useContext(AuthContext)
+
+    useEffect(() => {
+        handleReload()
+    }, [])
 
     return (
         <>
@@ -22,10 +26,10 @@ const PrivateNavbar = () => {
                 </div>
                 <div className="flex-none basis-1/2 justify-around">
                     <ul className="menu menu-horizontal px-1 flex items-center">
-                        {userData.tipoDeConta === 'prestador' ?
+                        {userData?.tipoDeConta === 'prestador' ?
                         <PrestadorLinks pathname={pathname}/>
                             :
-                            userData.tipoDeConta === 'tomador' ?
+                            userData?.tipoDeConta === 'tomador' ?
                                 <TomadorLinks pathname={pathname}/>
                                 : null
                         }

@@ -1,4 +1,4 @@
-import { prisma } from "../../database";
+import { prisma } from "../../../database";
 import { CreateFreteDTO } from "./fretes.protocols";
 
 async function createFrete ({
@@ -51,7 +51,15 @@ async function createFrete ({
 }
 
 async function fetchAllFretes () {
-    return prisma.frete.findMany({})
+    return prisma.frete.findMany({
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
 }
 
 async function fetchFretesByTomadorId (tomadorId: string) {

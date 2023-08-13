@@ -1,4 +1,4 @@
-import { prisma } from "../../database";
+import { prisma } from "../../../database";
 import {CreateUserDTO} from "./user.protocols";
 
 async function getUserById(userId: string) {

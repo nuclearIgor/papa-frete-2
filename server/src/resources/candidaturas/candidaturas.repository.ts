@@ -1,4 +1,4 @@
-import { prisma } from "../../database";
+import { prisma } from "../../../database";
 import {createCandidaturaDTO} from "./candidaturas.protocols";
 
 async function createCandidatura({freteId, prestadorId}: createCandidaturaDTO) {

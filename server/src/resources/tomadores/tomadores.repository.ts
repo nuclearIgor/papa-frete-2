@@ -1,4 +1,4 @@
-import { prisma } from "../../database";
+import { prisma } from "../../../database";
 import { UpdateDadosDaEmpresaDTO, UpdateDadosDoContatoDTO, UpdateDadosDoEnderecoDTO } from './tomadores.protocols';
 
 async function createTomador(userId: string) {

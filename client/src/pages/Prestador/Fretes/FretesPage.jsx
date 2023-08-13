@@ -1,7 +1,11 @@
 import FreteCard from "./FreteCard.jsx";
 import Filtros from "./Filtros.jsx";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import Cookie from "universal-cookie/es6";
+import {useQuery} from "@tanstack/react-query";
+import {fetchFretes} from "./requests.js";
+import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
+import LoadingScreen from "../../../components/Loading.jsx";
 
 const fretes = [
     {
@@ -111,10 +115,20 @@ const cookies = new Cookie();
 
 const FretesPage = () => {
 
+    const { token } = useContext(AuthContext)
+
+    const { data, loading } = useQuery({
+        queryKey: ['fretes'],
+        queryFn: () => fetchFretes(token)
+    })
+
     useEffect(() => {
-        const userData = cookies.get('userData')
-        console.log(userData)
-    }, [])
+        // const userData = cookies.get('userData')
+        // console.log(userData)
+        console.log('data:', data)
+    }, [data])
+
+    if ( loading ) return <LoadingScreen/>
 
     return (
         <div className={'flex p-6 gap-2'}>
