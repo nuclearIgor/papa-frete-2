@@ -21,9 +21,9 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(cookies.get('token'));
     const [userData, setUserData] = useState(cookies.get('userData'));
 
-    useEffect(() => {
-        console.log('userData: \n', userData);
-    }, [userData]);
+    // useEffect(() => {
+    //     console.log('userData: \n', userData);
+    // }, [userData]);
 
     const handleLogin = async (loginData, from) => {
         // console.log('logindata: \n', loginData)

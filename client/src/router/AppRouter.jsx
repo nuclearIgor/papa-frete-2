@@ -8,6 +8,7 @@ import CadastroPage from "../pages/Public/Cadastro/CadastroPage.jsx";
 import CadastroPrestadorPage from "../pages/Public/Cadastro/CadastroPrestador/CadastroPrestadorPage.jsx";
 import CadastroTomadorPage from "../pages/Public/Cadastro/CadastroTomador/CadastroTomadorPage.jsx";
 import PrivateNavbar from "../components/navBar/PrivateNavbar.jsx";
+import NovoFretePage from "../pages/Tomador/NovoFrete/NovoFretePage.jsx";
 
 const AppRouter = () => {
     return (
@@ -47,16 +48,35 @@ const AppRouter = () => {
                 />
             </Route>
 
-            <Route path={'/fretes'} element={<PrivateNavbar/>}>
-                <Route
-                    index={true}
-                    element={
-                        <AuthenticatedRoute>
-                            <FretesPage />
-                        </AuthenticatedRoute>
-                    }
-                />
+            <Route element={<PrivateNavbar/>}>
+                    <Route
+                        path={'/fretes'}
+                        element={
+                            <AuthenticatedRoute>
+                                <FretesPage />
+                            </AuthenticatedRoute>
+                        }
+                    />
+                    <Route
+                        path={'/novo-frete'}
+                        element={
+                            <AuthenticatedRoute>
+                                <NovoFretePage />
+                            </AuthenticatedRoute>
+                        }
+                    />
             </Route>
+
+            {/*<Route path={'/fretes'} element={<PrivateNavbar/>}>*/}
+            {/*    <Route*/}
+            {/*        index={true}*/}
+            {/*        element={*/}
+            {/*            <AuthenticatedRoute>*/}
+            {/*                <FretesPage />*/}
+            {/*            </AuthenticatedRoute>*/}
+            {/*        }*/}
+            {/*    />*/}
+            {/*</Route>*/}
         </Routes>
     );
 };
