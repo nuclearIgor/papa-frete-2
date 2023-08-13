@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ColetaEntregaForm from "./ColetaEntregaForm.jsx";
 import OrigemDestinoForm from "./OrigemDestinoForm.jsx";
 import VeiculoCarroceriaPreferencialForm from "./VeiculoCarroceriaPreferencialForm.jsx";
 import LoadingScreen from "../../../components/Loading.jsx";
 import OfertasObservacoesForm from "./OfertasObservacoesForm.jsx";
 import Revisao from "./Revisao.jsx";
+import axios from "axios";
+import {baseUrl} from "../../../App.jsx";
+import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
 
 const NovoFretePage = () => {
     const [frete, setFrete] = useState({
@@ -13,6 +16,8 @@ const NovoFretePage = () => {
         ufDestino: 'estado',
         reaisPorKm: 'x'
     })
+
+    const { token } = useContext(AuthContext)
 
     useEffect(() => {
         console.log('frete: \n', frete);
@@ -61,8 +66,23 @@ const NovoFretePage = () => {
         setFormState(4)
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        setLoading(true)
         console.log('frete: \n', frete)
+        try {
+            const res = await axios.post(`${baseUrl}/api/fretes`,
+                frete, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                })
+
+            console.log(res)
+            setLoading(false)
+        } catch (e) {
+            console.log(e)
+            setLoading(false)
+        }
     }
 
     function handleBackButton() {

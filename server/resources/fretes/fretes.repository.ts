@@ -1,7 +1,26 @@
 import { prisma } from "../../database";
 import { CreateFreteDTO } from "./fretes.protocols";
 
-async function createFrete ({ufOrigem, cidadeOrigem, ufDestino, cidadeDestino, tipoDeCarga, observacoes, veiculoAlvo, carroceriaAlvo, entrega, coleta, oferece}: CreateFreteDTO, tomadorId: string) {
+async function createFrete ({
+                                ufOrigem,
+                                cidadeOrigem,
+                                ufDestino,
+                                cidadeDestino,
+                                tipoDeCarga,
+                                observacoes,
+                                veiculoAlvo,
+                                carroceriaAlvo,
+                                entrega,
+                                janelaEntrega,
+                                coleta,
+                                janelaColeta,
+                                oferecePedagio,
+                                oferecePernoite,
+                                ofereceCarga,
+                                ofereceDescarga,
+                                reaisPorKm
+
+}: CreateFreteDTO, tomadorId: string) {
     return prisma.frete.create({
         data: {
             Tomador: {
@@ -18,8 +37,15 @@ async function createFrete ({ufOrigem, cidadeOrigem, ufDestino, cidadeDestino, t
             veiculoAlvo,
             carroceriaAlvo,
             entrega,
+            janelaEntrega,
             coleta,
-            oferece
+            janelaColeta,
+            oferecePedagio,
+            oferecePernoite,
+            ofereceCarga,
+            ofereceDescarga,
+            reaisPorKm,
+            visivel: true
         }
     })
 }

@@ -120,7 +120,7 @@ const Revisao = ({ frete, handleBack, onSubmit}) => {
                 >
                     Voltar
                 </button>
-                <button className={'btn btn-primary w-24'} type={'submit'}>
+                <button className={'btn btn-primary w-24'} type={'submit'} onClick={onSubmit}>
                         Publicar
                 </button>
             </div>

@@ -101,9 +101,20 @@ model Frete {
   Tomador   Tomador @relation("TomadorFrete", fields: [tomadorId], references: [id])
   tomadorId String
 
-  coleta  String
-  entrega String
-  oferece String
+  coleta       String
+  janelaColeta String
+
+  entrega       String
+  janelaEntrega String
+
+  oferecePernoite Boolean
+  oferecePedagio  Boolean
+  ofereceCarga    Boolean
+  ofereceDescarga Boolean
+
+  reaisPorKm String
+
+  visivel Boolean
 
   ufOrigem     String
   cidadeOrigem String

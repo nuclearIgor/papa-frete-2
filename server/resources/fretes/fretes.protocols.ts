@@ -8,8 +8,17 @@ export interface CreateFreteDTO {
     cidadeDestino: string
 
     coleta: string
+    janelaColeta: string
+
     entrega: string
-    oferece: string
+    janelaEntrega: string
+
+    oferecePedagio: boolean
+    oferecePernoite: boolean
+    ofereceCarga: boolean
+    ofereceDescarga: boolean
+
+    reaisPorKm: string
 
     tipoDeCarga: string
     observacoes: string
@@ -25,8 +34,17 @@ export const CreateFreteSchema = Joi.object({
     cidadeDestino: Joi.string().required(),
 
     coleta: Joi.string().required(),
+    janelaColeta: Joi.string().required(),
+
     entrega: Joi.string().required(),
-    oferece: Joi.string().required(),
+    janelaEntrega: Joi.string().required(),
+
+    oferecePedagio: Joi.boolean().required(),
+    oferecePernoite: Joi.boolean().required(),
+    ofereceCarga: Joi.boolean().required(),
+    ofereceDescarga: Joi.boolean().required(),
+
+    reaisPorKm: Joi.string().required(),
 
     tipoDeCarga: Joi.any().valid('seca', 'graos', 'refrigerada').required(),
     observacoes: Joi.any().optional(),
