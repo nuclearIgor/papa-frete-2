@@ -2,12 +2,14 @@
 
 import { Button, Modal } from 'flowbite-react';
 
-export default function ConfirmarExclusaoModal({buttonText, isOpen, setOpen, onAccept}) {
+export default function ConfirmarCandidaturaModal ({buttonText, isOpen, setOpen, onAccept, onDecline}) {
 
     return (
         <>
-            <button onClick={() => setOpen('pop-up')}>
-                {/*Toggle modal*/}
+            <button
+                onClick={() => setOpen('pop-up')}
+                className={'btn btn-primary'}
+            >
                 {buttonText}
             </button>
             <Modal
@@ -15,27 +17,21 @@ export default function ConfirmarExclusaoModal({buttonText, isOpen, setOpen, onA
                 show={isOpen}
                 onClose={() => setOpen(undefined)}
             >
-                <Modal.Header>Confirmar exclusao</Modal.Header>
+                <Modal.Header>Candidatar ao frete</Modal.Header>
                 <Modal.Body>
                     <div className="space-y-6">
                         <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                           Tem certeza que deseja excluir este frete?
+                            Por sua conta e risco
                         </p>
 
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <button
+                        className={'btn btn-primary'}
                         // onClick={() => props.setOpenModal(undefined)}
                         onClick={onAccept}
-                    >I accept</button>
-                    <button
-                        color="gray"
-                        onClick={onDecline}
-                        // onClick={() => props.setOpenModal(undefined)}
-                    >
-                        Decline
-                    </button>
+                    >Continuar</button>
                 </Modal.Footer>
             </Modal>
         </>

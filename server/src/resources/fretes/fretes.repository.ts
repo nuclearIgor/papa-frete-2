@@ -77,6 +77,14 @@ async function fetchFreteById (freteId: string) {
     return prisma.frete.findUnique({
         where: {
             id: freteId
+        },
+        include: {
+            Candidatura: true,
+            Tomador: {
+                select: {
+                    nomeFantasia: true,
+                }
+            }
         }
     })
 }

@@ -11,6 +11,7 @@ import PrivateNavbar from "../components/navBar/PrivateNavbar.jsx";
 import NovoFretePage from "../pages/Tomador/NovoFrete/NovoFretePage.jsx";
 import MeusFretesPage from "../pages/Tomador/MeusFretes/MeusFretesPage.jsx";
 import TomadorFretePage from "../pages/Tomador/Frete/TomadorFretePage.jsx";
+import PrestadorFretePage from "../pages/Prestador/Frete/PrestadorFretePage.jsx";
 
 const AppRouter = () => {
     return (
@@ -51,6 +52,14 @@ const AppRouter = () => {
             </Route>
 
             <Route element={<PrivateNavbar/>}>
+                    <Route
+                        path={'/fretes/:freteId'}
+                        element={
+                            <AuthenticatedRoute>
+                                <PrestadorFretePage />
+                            </AuthenticatedRoute>
+                        }
+                    />
                     <Route
                         path={'/fretes'}
                         element={

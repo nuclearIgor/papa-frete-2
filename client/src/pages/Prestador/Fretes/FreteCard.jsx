@@ -3,6 +3,7 @@ import {AiOutlineCheck, AiOutlineEye} from "react-icons/ai";
 import {RxAvatar} from "react-icons/rx";
 import {BsInfoCircleFill, BsTruck} from "react-icons/bs";
 import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
+import {useNavigate} from "react-router-dom";
 
 const FreteCard = ({frete}) => {
     const { userData } = useContext(AuthContext)
@@ -24,9 +25,9 @@ const FreteCard = ({frete}) => {
         ofereceCarga,
         ofereceDescarga,
         reaisPorKm,
-
-
     } = frete
+
+    const navigate = useNavigate()
 
     return (
         <div className={'flex py-4 m-4 rounded-md border border-gray-300'}>
@@ -125,7 +126,11 @@ const FreteCard = ({frete}) => {
                     : null
                 }
 
-                <button className={'flex items-center bg-papaYellow rounded-lg btn'}>Visualizar <AiOutlineEye/></button>
+                <button
+                    className={'flex items-center bg-papaYellow rounded-lg btn'}
+                    onClick={() => navigate(`/fretes/${frete.id}`)}
+                >
+                    Visualizar <AiOutlineEye/></button>
             </div>
 
         </div>

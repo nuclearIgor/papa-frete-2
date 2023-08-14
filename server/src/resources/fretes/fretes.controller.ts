@@ -60,10 +60,22 @@ async function updateFrete (req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function fetchFreteById (req: Request, res: Response, next: NextFunction) {
+    const { freteId } = req.params
+
+    try {
+        const frete = await fretesService.fetchFreteById(freteId)
+        res.status(200).json({frete})
+    } catch (e) {
+        next(e)
+    }
+}
+
 export const fretesController = {
     createFrete,
     fetchAllFretes,
     fetchFretesByTomadorId,
     deleteFrete,
-    updateFrete
+    updateFrete,
+    fetchFreteById
 }

@@ -15,12 +15,12 @@ import {
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deleteFrete, editFrete} from "./requests.js";
 import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
-import DefaultModal from "./Modal.jsx";
+import ConfirmarExclusaoModal from "./Modal.jsx";
 
 const TomadorFretePage = ( ) => {
     const { state } = useLocation()
     const { frete } = state
-    // console.log(frete)
+    console.log(frete)
 
     const [isEditing, setIsEditing] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -130,7 +130,7 @@ const TomadorFretePage = ( ) => {
                         {/*    Excluir*/}
                         {/*</button>*/}
 
-                        <DefaultModal
+                        <ConfirmarExclusaoModal
                             buttonText={'Excluir'}
                             isOpen={isOpen}
                             setOpen={setIsOpen}
@@ -141,18 +141,19 @@ const TomadorFretePage = ( ) => {
                         <label className="label cursor-pointer w-20 px-4">
                             <span className="label-text">Oculto</span>
                             <input
-                                defaultValue={editedFrete.visivel}
                                 type="checkbox"
                                 className="toggle toggle-primary mx-2"
                                 disabled={!isEditing}
                                 onChange={e => setEditedFrete((prevState) => {
+                                    console.log(e.target.checked)
                                     return {
                                         ...prevState,
                                        visivel: e.target.checked
                                     }
                                 })}
+                                // value={editedFrete.visivel}
                             />
-                            <span className="label-text">Visivel</span>
+                            {/*<span className="label-text">Visivel</span>*/}
                         </label>
 
                     </div>
@@ -215,7 +216,7 @@ const TomadorFretePage = ( ) => {
 
                 <div className={'flex basis-1/2 flex-col items-center gap-2 w-4/5 mx-auto mb-5 mt-4'}>
                     <label className="label">
-                        <span className="label-text font-bold">Origem</span>
+                        <span className="label-text font-bold">Destino</span>
                     </label>
 
                     <div className={'flex gap-2 w-full justify-center'}>
@@ -253,10 +254,10 @@ const TomadorFretePage = ( ) => {
                         >
                             <option value="cidade" disabled>Cidade</option>
                             <option
-                                value={ESTADOS[`${editedFrete.ufOrigem}`][0].nome}
+                                value={ESTADOS[`${editedFrete.ufDestino}`][0].nome}
                                 selected
                             >
-                                {ESTADOS[`${editedFrete.ufOrigem}`][0].nome}
+                                {ESTADOS[`${editedFrete.ufDestino}`][0].nome}
                             </option>
                             {ESTADOS[`${editedFrete.ufDestino}`]
                                 .map(item =>

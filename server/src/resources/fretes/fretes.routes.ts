@@ -9,6 +9,7 @@ const fretesRouter = Router()
 fretesRouter.post('/', validateDataSchemaAndStoreInResLocals(CreateFreteSchema, 'freteData'), validateToken,  fretesController.createFrete)
 fretesRouter.get('/', validateToken,  fretesController.fetchAllFretes)
 fretesRouter.get('/me', validateToken,  fretesController.fetchFretesByTomadorId)
+fretesRouter.get('/frete/:freteId', validateToken,  fretesController.fetchFreteById)
 fretesRouter.patch('/update/:freteId', validateDataSchemaAndStoreInResLocals(UpdateFreteSchema, 'freteData'), validateToken,  fretesController.updateFrete)
 fretesRouter.delete('/delete/:freteId', validateToken,  fretesController.deleteFrete)
 

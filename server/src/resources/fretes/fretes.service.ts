@@ -63,6 +63,20 @@ async function updateFrete(userId: string, frete: UpdateFreteDTO) {
     }
 }
 
+async function fetchFreteById(freteId: string) {
+    try {
+        const frete = await fretesRepository.fetchFreteById(freteId)
+
+        if (!frete) {
+            throw new ApplicationError('not found', 404)
+        }
+
+        return frete
+    } catch (e: any) {
+        throw new ApplicationError(e.message, e.statusCode)
+    }
+}
+
 async function deleteFrete(userId: string, freteId: string) {
     try {
 
@@ -90,5 +104,6 @@ export const fretesService = {
     fetchFretesByTomadorId,
     fetchAllFretes,
     updateFrete,
-    deleteFrete
+    deleteFrete,
+    fetchFreteById
 }

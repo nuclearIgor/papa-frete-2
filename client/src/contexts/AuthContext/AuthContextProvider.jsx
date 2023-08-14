@@ -43,8 +43,13 @@ export const AuthProvider = ({ children }) => {
         Cookies.remove('email')
         Cookies.set('email', loginData.email);
 
-        if (from === '/') {
+        if (from === '/' && loginData.tipoDeConta === 'prestador') {
             navigate('/fretes');
+            return;
+        }
+
+        if (from === '/' && loginData.tipoDeConta === 'tomador') {
+            navigate('/meus-fretes');
             return;
         }
 
