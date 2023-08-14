@@ -9,6 +9,8 @@ import CadastroPrestadorPage from "../pages/Public/Cadastro/CadastroPrestador/Ca
 import CadastroTomadorPage from "../pages/Public/Cadastro/CadastroTomador/CadastroTomadorPage.jsx";
 import PrivateNavbar from "../components/navBar/PrivateNavbar.jsx";
 import NovoFretePage from "../pages/Tomador/NovoFrete/NovoFretePage.jsx";
+import MeusFretesPage from "../pages/Tomador/MeusFretes/MeusFretesPage.jsx";
+import TomadorFretePage from "../pages/Tomador/Frete/TomadorFretePage.jsx";
 
 const AppRouter = () => {
     return (
@@ -62,6 +64,22 @@ const AppRouter = () => {
                         element={
                             <AuthenticatedRoute>
                                 <NovoFretePage />
+                            </AuthenticatedRoute>
+                        }
+                    />
+                    <Route
+                        path={'/meus-fretes/:freteId'}
+                        element={
+                            <AuthenticatedRoute>
+                                <TomadorFretePage />
+                            </AuthenticatedRoute>
+                        }
+                    />
+                    <Route
+                        path={'/meus-fretes'}
+                        element={
+                            <AuthenticatedRoute>
+                                <MeusFretesPage />
                             </AuthenticatedRoute>
                         }
                     />

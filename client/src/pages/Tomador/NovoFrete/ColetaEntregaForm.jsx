@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import DatePicker from "react-datepicker";
+import {brDateToUtc} from "../../../../util/brDateToUtc.js";
 
 const ColetaEntregaForm = ({ handleBack, loading, onSubmit, frete}) => {
-
-    const brDateToUtc = (strDate) => {
-        const a = strDate.split('/')
-        return `${a[1]}-${a[0]}-${a[2]}`
-    }
 
     const [coleta, setColeta] = useState(frete.coleta ? frete.coleta : 'livre');
     const [entrega, setEntrega] = useState(frete.entrega ? frete.entrega : 'sem agenda');
