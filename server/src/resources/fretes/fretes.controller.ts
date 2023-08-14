@@ -36,8 +36,34 @@ async function fetchAllFretes(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function deleteFrete(req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
+    const { freteId } = req.params
+
+    try {
+        await fretesService.deleteFrete(userId, freteId)
+        res.status(204).send()
+    } catch (e) {
+        next(e)
+    }
+}
+
+async function updateFrete (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
+    const { freteData } = res.locals
+
+    try {
+        const frete = await fretesService.updateFrete(userId, freteData)
+        res.status(200).json({frete})
+    } catch (e) {
+        next(e)
+    }
+}
+
 export const fretesController = {
     createFrete,
     fetchAllFretes,
-    fetchFretesByTomadorId
+    fetchFretesByTomadorId,
+    deleteFrete,
+    updateFrete
 }

@@ -1,5 +1,5 @@
 import { prisma } from "../../../database";
-import { CreateFreteDTO } from "./fretes.protocols";
+import {CreateFreteDTO, UpdateFreteDTO} from "./fretes.protocols";
 
 async function createFrete ({
                                 ufOrigem,
@@ -81,9 +81,65 @@ async function fetchFreteById (freteId: string) {
     })
 }
 
+async function updateFrete ({
+    id,
+    ufOrigem,
+    cidadeOrigem,
+    ufDestino,
+    cidadeDestino,
+    coleta,
+    janelaColeta,
+    entrega,
+    janelaEntrega,
+    veiculoAlvo,
+    carroceriaAlvo,
+    tipoDeCarga,
+    ofereceDescarga,
+    ofereceCarga,
+    oferecePernoite,
+    oferecePedagio,
+    reaisPorKm,
+    observacoes
+                            }: UpdateFreteDTO) {
+    return prisma.frete.update({
+        where: {
+            id
+        },
+        data: {
+            ufOrigem,
+            cidadeOrigem,
+            ufDestino,
+            cidadeDestino,
+            coleta,
+            janelaColeta,
+            entrega,
+            janelaEntrega,
+            veiculoAlvo,
+            carroceriaAlvo,
+            tipoDeCarga,
+            ofereceDescarga,
+            ofereceCarga,
+            oferecePernoite,
+            oferecePedagio,
+            reaisPorKm,
+            observacoes
+        }
+    })
+}
+
+async function deleteFrete(freteId: string) {
+    return prisma.frete.delete({
+        where: {
+            id: freteId
+        }
+    })
+}
+
 export const fretesRepository = {
     createFrete,
     fetchAllFretes,
     fetchFretesByTomadorId,
-    fetchFreteById
+    fetchFreteById,
+    updateFrete,
+    deleteFrete
 }

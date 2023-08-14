@@ -1,7 +1,7 @@
 import {tomadorRepository} from "../tomadores/tomadores.repository";
 import {ApplicationError} from "../common/applicationError";
 import {fretesRepository} from "./fretes.repository";
-import {CreateFreteDTO} from "./fretes.protocols";
+import {CreateFreteDTO, UpdateFreteDTO} from "./fretes.protocols";
 
 async function createFrete(data: CreateFreteDTO, userId: string) {
     if (!data['veiculoAlvo']) {
@@ -47,8 +47,48 @@ async function fetchAllFretes() {
         throw new ApplicationError(e.message, 400)
     }
 }
+
+async function updateFrete(userId: string, frete: UpdateFreteDTO) {
+    try {
+        const tomador = await tomadorRepository.getTomadorByUserId(userId)
+
+        if (!tomador || tomador.id !== frete.tomadorId) {
+            throw new ApplicationError('sem permissao', 403)
+        }
+
+        return await fretesRepository.updateFrete(frete)
+    } catch (e: any) {
+        console.log(e)
+        throw new ApplicationError(e.message, e.statusCode)
+    }
+}
+
+async function deleteFrete(userId: string, freteId: string) {
+    try {
+
+        const [tomador, frete] = await Promise.all([
+            await tomadorRepository.getTomadorByUserId(userId),
+            await fretesRepository.fetchFreteById(freteId)
+        ])
+
+        if (!tomador || !frete) {
+            throw new ApplicationError('bad request', 400)
+        }
+
+        if (tomador.id !== frete.tomadorId) {
+            throw new ApplicationError('sem permissao', 403)
+        }
+
+        return await fretesRepository.deleteFrete(freteId)
+    } catch (e: any) {
+        console.log(e)
+        throw new ApplicationError(e.message, e.statusCode)
+    }
+}
 export const fretesService = {
     createFrete,
     fetchFretesByTomadorId,
-    fetchAllFretes
+    fetchAllFretes,
+    updateFrete,
+    deleteFrete
 }
