@@ -1,6 +1,6 @@
 import {AiFillEdit} from "react-icons/ai";
 import React, {useContext, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {ESTADOS} from "../../../../util/cidades.js";
 import DatePicker from "react-datepicker";
 import { brDateToUtc } from "../../../../util/brDateToUtc.js";
@@ -13,8 +13,9 @@ import {
     tipoVeiculoPesado
 } from "../../Public/Cadastro/CadastroPrestador/formData.js";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {deleteFrete} from "./requests.js";
+import {deleteFrete, editFrete} from "./requests.js";
 import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
+import DefaultModal from "./Modal.jsx";
 
 const TomadorFretePage = ( ) => {
     const { state } = useLocation()
@@ -35,14 +36,14 @@ const TomadorFretePage = ( ) => {
     const queryClient = useQueryClient()
 
     const editMutation = useMutation({
-        mutationFn: editedFrete,
+        mutationFn: ({frete, token}) => editFrete(frete, token),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['meus-fretes']})
         }
     })
 
     const deleteMutation = useMutation({
-        mutationFn: deleteFrete,
+        mutationFn: ({freteId, token}) => deleteFrete(freteId, token),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['meus-fretes']})
         }
@@ -63,18 +64,33 @@ const TomadorFretePage = ( ) => {
             editedFrete.reaisPorKm = 'x'
         }
 
-        editMutation.mutate(editedFrete, token)
+        editMutation.mutate({frete: editedFrete, token: token})
 
         setIsEditing(false)
         setLoading(false)
         console.log(editedFrete)
     }
 
-    const handleDelete = async () => {
+    const navigate = useNavigate()
+
+    const handleDelete = () => {
         setLoading(true)
 
-        deleteMutation.mutate(editedFrete.id, token)
+        deleteMutation.mutate({freteId: editedFrete.id, token: token})
         setLoading(false)
+        navigate('/meus-fretes')
+    }
+
+    const [isOpen, setIsOpen] = useState(undefined)
+
+    const onAccept = () => {
+        handleDelete()
+        setIsOpen(undefined)
+        console.log('accept')
+    }
+    const onDecline = () => {
+        setIsOpen(undefined)
+        console.log('decline')
     }
 
     return (
@@ -107,12 +123,20 @@ const TomadorFretePage = ( ) => {
             {isEditing ?
                 <div className="flex justify-end w-full py-6">
                     <div className={'flex  items-end w-2/5'}>
-                        <button
-                            className={'btn bg-red-600 text-white hover:bg-papaBlue w-24'}
-                            onClick={handleDelete}
-                        >
-                            Excluir
-                        </button>
+                        {/*<button*/}
+                        {/*    className={'btn bg-red-600 text-white hover:bg-papaBlue w-24'}*/}
+                        {/*    onClick={handleDelete}*/}
+                        {/*>*/}
+                        {/*    Excluir*/}
+                        {/*</button>*/}
+
+                        <DefaultModal
+                            buttonText={'Excluir'}
+                            isOpen={isOpen}
+                            setOpen={setIsOpen}
+                            onAccept={onAccept}
+                            onDecline={onDecline}
+                        />
 
                         <label className="label cursor-pointer w-20 px-4">
                             <span className="label-text">Oculto</span>
