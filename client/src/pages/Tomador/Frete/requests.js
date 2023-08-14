@@ -2,6 +2,10 @@ import axios from "axios";
 import {baseUrl} from "../../../App.jsx";
 
 export async function editFrete (frete, token) {
+    delete frete.Candidatura
+    delete frete.updatedAt
+    delete frete.createdAt
+
     try {
         const { data } = await axios.patch(`${baseUrl}/api/fretes/update/${frete.id}`, frete, {
             headers: {
