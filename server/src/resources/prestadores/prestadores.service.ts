@@ -1,4 +1,4 @@
-import {UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO} from "./prestadores.protocols";
+import {UpdateDadosDoEnderecoDTO, UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO} from "./prestadores.protocols";
 import {prestadorRepository} from "./prestadores.repository";
 import {RegisterDTO} from "../users/user.protocols";
 import {userService} from "../users/users.service";
@@ -37,6 +37,15 @@ async function updateDadosDoVeiculo (data: UpdateDadosDoVeiculoDTO, prestadorId:
     }
 }
 
+async function updateDadosDoEndereco (data: UpdateDadosDoEnderecoDTO, prestadorId: string) {
+    try {
+        return await prestadorRepository.updateDadosDoEndereco(data, prestadorId)
+    } catch (e) {
+        console.log(e)
+        return  false
+    }
+}
+
 async function getPrestadorByUserId (userId: string) {
     try {
         return await prestadorRepository.getPrestadorByUserId(userId)
@@ -50,5 +59,6 @@ export const prestadoresService = {
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,
-    getPrestadorByUserId
+    getPrestadorByUserId,
+    updateDadosDoEndereco
 }

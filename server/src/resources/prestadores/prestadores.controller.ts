@@ -25,6 +25,19 @@ async function updateDadosPessoais(req: Request, res: Response, next: NextFuncti
     }
 }
 
+async function updateDadosDoEndereco (req: Request, res: Response, next: NextFunction) {
+    const { dadosDoEnderecoData } = res.locals
+    const { prestadorId } = req.params
+
+    try {
+        const prestador = await prestadoresService.updateDadosDoEndereco(dadosDoEnderecoData, prestadorId)
+        return res.json({ prestador })
+    } catch (e) {
+        console.log(e)
+        next(e)
+    }
+}
+
 async function updateDadosDoVeiculo (req: Request, res: Response) {
     const { dadosDoVeiculoData } = res.locals
     const { prestadorId } = req.params
@@ -60,5 +73,6 @@ export const prestadoresController = {
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,
+    updateDadosDoEndereco,
     getPrestadorByUserId
 }

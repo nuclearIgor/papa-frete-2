@@ -1,5 +1,5 @@
 import { prisma } from "../../../database";
-import {UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO} from "./prestadores.protocols";
+import {UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO, UpdateDadosDoEnderecoDTO} from "./prestadores.protocols";
 
 async function updateDadosPessoais ({nomeCompleto, cpf, ddd, celular, cnh, categoriaCNH}: UpdateDadosPessoaisDTO, prestadorId: string) {
     return prisma.prestador.update({
@@ -63,6 +63,23 @@ async function updateDadosDoVeiculo ({tipoVeiculo, tipoCarroceria, anoDeFabricac
     })
 }
 
+async function updateDadosDoEndereco ({uf, numero, cep, bairro, logradouro, localidade, complemento}: UpdateDadosDoEnderecoDTO, prestadorId: string) {
+    return prisma.prestador.update({
+        where: {
+            id: prestadorId
+        },
+        data: {
+            estado: uf,
+            cidade: localidade,
+            rua: logradouro,
+            cep,
+            numero,
+            bairro,
+            complemento
+        }
+    })
+}
+
 async function getPrestadorByUserId(userId: string) {
     return prisma.prestador.findUnique({
         where: {
@@ -83,6 +100,7 @@ export const prestadorRepository = {
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,
+    updateDadosDoEndereco,
     findByCpf,
     getPrestadorByUserId,
     getPrestadorById

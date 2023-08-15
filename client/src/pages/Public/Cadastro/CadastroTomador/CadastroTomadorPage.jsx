@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { baseUrl } from "../../../../App.jsx";
-import DadosDoEnderecoForm from './EnderecoForm.jsx';
+import DadosDoEnderecoForm from '../EnderecoForm.jsx';
 import DadosDoContatoForm from './DadosDoContatoForm.jsx';
 import DadosDaEmpresaForm from './DadosDaEmpresaForm.jsx';
 import DadosDeAutenticacaoForm from '../DadosDeAutenticacaoForm.jsx';

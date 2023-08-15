@@ -7,6 +7,7 @@ import DadosPessoaisForm from './DadosPessoaisForm.jsx';
 import DadosDoVeiculoForm from './DadosDoVeiculoForm.jsx';
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from "../../../../components/Loading.jsx";
+import EnderecoForm from "../EnderecoForm.jsx";
 
 const CadastroPrestadorPage = () => {
     const [formState, setFormState] = useState(0);
@@ -78,6 +79,33 @@ const CadastroPrestadorPage = () => {
         }
         setFormState(2);
     }
+
+    const [enderecoLoading, setEnderecoLoading] = useState(false)
+
+    async function onSubmitDadosDoEndereco(values) {
+        console.log(values);
+
+        setLoading(true);
+
+        try {
+            const res = await axios.patch(
+                `${baseUrl}/api/prestadores/${prestadorData.id}/dados-endereco`,
+                values,
+            );
+            const { prestador } = res.data;
+            setPrestadorData({ ...prestador });
+
+            setLoading(false);
+            toast.success('sucesso');
+            setFormState(3);
+
+        } catch (e) {
+            console.log(e);
+            setLoading(false);
+            toast.error('erro');
+        }
+    }
+
     async function onSubmitVeiculoForm(values) {
         setLoading(true);
 
@@ -122,7 +150,10 @@ const CadastroPrestadorPage = () => {
                 <li className={`step ${formState >= 1 ? 'step-primary' : ''}`}>
                     Dados pessoais
                 </li>
-                <li className={`step ${formState >= 2 ? 'step-primary' : ''} `}>
+                <li className={`step ${formState >= 2 ? 'step-primary' : ''}`}>
+                    Endereco
+                </li>
+                <li className={`step ${formState >= 3 ? 'step-primary' : ''} `}>
                     Dados do veiculo
                 </li>
             </ul>
@@ -142,6 +173,15 @@ const CadastroPrestadorPage = () => {
                 />
             ) : null}
             {formState === 2 ? (
+                <EnderecoForm
+                    prestadorData={prestadorData}
+                    onSubmit={onSubmitDadosDoEndereco}
+                    handleBack={handleBackButton}
+                    loading={enderecoLoading}
+                    setLoading={setEnderecoLoading}
+                />
+            ) : null}
+            {formState === 3 ? (
                 <DadosDoVeiculoForm
                     onSubmit={onSubmitVeiculoForm}
                     handleBack={handleBackButton}

@@ -77,6 +77,14 @@ model Prestador {
   ddd      String?
   telefone String?
 
+  cep         String?
+  estado      String?
+  cidade      String?
+  bairro      String?
+  rua         String?
+  numero      String?
+  complemento String?
+
   cnh          String?
   categoriaCNH String?
 

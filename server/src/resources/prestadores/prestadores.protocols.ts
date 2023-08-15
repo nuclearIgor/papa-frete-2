@@ -36,3 +36,24 @@ export const UpdateDadosDoVeiculoSchema = Joi.object({
     ).required(),
     anoDeFabricacao: Joi.string().length(4).required(),
 })
+
+export interface UpdateDadosDoEnderecoDTO {
+    uf: string;
+    localidade: string;
+    bairro: string;
+    cep: string;
+    logradouro: string;
+    numero: string;
+    complemento: string;
+}
+
+export const UpdateDadosDoEnderecoSchema = Joi.object({
+    uf: Joi.string().length(2).required(),
+    localidade: Joi.string().required(),
+    bairro: Joi.string().required(),
+    cep: Joi.string().required(),
+    logradouro: Joi.string().required(),
+    numero: Joi.string().required(),
+    complemento: Joi.any().optional(),
+    // complemento: Joi.string().presence('optional'),
+})
