@@ -16,10 +16,10 @@ const PrestadorLinks = ({pathname}) => {
                 </Link>
             </li>
             <li>
-                <Link to={'/candidaturas'}>
+                <Link to={'/minhas-candidaturas'}>
                     <div
                         className={`
-                            ${pathname === '/candidaturas' ? 'bg-white' : ''}
+                            ${pathname === '/minhas-candidaturas' ? 'bg-white' : ''}
                             `}
                     >
                         Candidaturas

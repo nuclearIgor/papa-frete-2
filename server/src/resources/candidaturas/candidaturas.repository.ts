@@ -43,6 +43,32 @@ async function getCandidaturasByPrestadorId (prestadorId: string) {
     return prisma.candidatura.findMany({
         where: {
             prestadorId
+        },
+        include: {
+            Frete: {
+                include: {
+                    Tomador: {
+                        select: {
+                            nomeFantasia: true
+                        }
+                    }
+                },
+                // select: {
+                //     ufOrigem: true,
+                //     cidadeOrigem: true,
+                //     ufDestino: true,
+                //     cidadeDestino: true,
+                //     coleta: true,
+                //     janelaColeta: true,
+                //     entrega: true,
+                //     janelaEntrega: true,
+                //     reaisPorKm: true,
+                //     ofereceCarga: true,
+                //     ofereceDescarga: true,
+                //     oferecePedagio: true,
+                //     oferecePernoite: true,
+                // }
+            }
         }
     })
 }

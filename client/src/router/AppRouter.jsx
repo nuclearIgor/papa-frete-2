@@ -12,6 +12,7 @@ import NovoFretePage from "../pages/Tomador/NovoFrete/NovoFretePage.jsx";
 import MeusFretesPage from "../pages/Tomador/MeusFretes/MeusFretesPage.jsx";
 import TomadorFretePage from "../pages/Tomador/Frete/TomadorFretePage.jsx";
 import PrestadorFretePage from "../pages/Prestador/Frete/PrestadorFretePage.jsx";
+import MinhasCandidaturasPage from "../pages/Prestador/Candidaturas/MinhasCandidaturasPage.jsx";
 
 const AppRouter = () => {
     return (
@@ -65,6 +66,14 @@ const AppRouter = () => {
                         element={
                             <AuthenticatedRoute>
                                 <FretesPage />
+                            </AuthenticatedRoute>
+                        }
+                    />
+                    <Route
+                        path={'/minhas-candidaturas'}
+                        element={
+                            <AuthenticatedRoute>
+                                <MinhasCandidaturasPage />
                             </AuthenticatedRoute>
                         }
                     />

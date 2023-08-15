@@ -28,11 +28,11 @@ const TomadorFretePage = ( ) => {
 
     return (
         <div>
-            <div className={'flex w-10/12 mx-auto'}>
+            <div className={'flex w-10/12 mt-2 pb-4 bg-base-100  mx-auto'}>
                 <div
                     onClick={() => setPageState('aceitas')}
-                    className={`basis-1/6 p-5  shadow-sm
-                    ${pageState === 'aceitas' ? 'border-b-2 border-papaYellow' : '' }
+                    className={`basis-1/6 p-5 shadow-lg mx-2 rounded-md cursor-pointer hover:opacity-50
+                    ${pageState === 'aceitas' ? 'border-b-2 bg-papaYellow shadow-sm' : '' }
                     `}
                 >
                     Candidaturas aceitas ({candidaturasAceitas.length})
@@ -40,8 +40,8 @@ const TomadorFretePage = ( ) => {
 
                 <div
                     onClick={() => setPageState('pendentes')}
-                    className={`basis-1/6 p-5  shadow-sm
-                    ${pageState === 'pendentes' ? 'border-b-2 border-papaYellow' : '' }
+                    className={`basis-1/6 p-5  shadow-lg rounded-md cursor-pointer hover:opacity-50
+                    ${pageState === 'pendentes' ? 'border-b-2 bg-papaYellow shadow-sm' : '' }
                     `}
                 >
                     Candidaturas pendentes ({candidaturasPendentes.length})
@@ -50,8 +50,8 @@ const TomadorFretePage = ( ) => {
                 <div className={'flex-1 flex justify-end'}>
                     <div
                         onClick={() => setPageState('edit')}
-                        className={`text-right p-5 shadow-sm
-                        ${pageState === 'edit' ? 'border-b-2 border-papaYellow' : '' }
+                        className={`text-right p-5 shadow-lg rounded-md cursor-pointer hover:opacity-50
+                        ${pageState === 'edit' ? 'border-b-2 bg-papaYellow shadow-sm' : '' }
                         `}
                     >
                         ver ou editar frete
