@@ -53,7 +53,7 @@ const CandidaturaAceitaCard = ({candidatura}) => {
                         <div>
                             <h2 className={'text-3xl text-center flex items-center justify-center'}>
                                 <BsWhatsapp className={'text-green-600 mr-2'}/>
-                                {candidatura.Prestador.ddd}-{candidatura.Prestador.telefone}
+                                ({candidatura.Prestador.ddd}) {candidatura.Prestador.telefone}
                             </h2>
                             <p className={'text-center mt-4'}>CNH: {candidatura.Prestador.cnh}</p>
                             <p className={'text-center'}>Categoria: {candidatura.Prestador.categoriaCNH}</p>
