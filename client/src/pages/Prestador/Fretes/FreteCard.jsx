@@ -31,8 +31,8 @@ const FreteCard = ({frete}) => {
 
     return (
         <div className={'flex py-4 m-4 rounded-md border border-gray-300'}>
-            <div className={'basis-3/12'}>
-                <RxAvatar className={'w-full h-full'}/>
+            <div className={'basis-2/12 flex justify-center items-center'}>
+                <RxAvatar className={'w-32 h-32'}/>
             </div>
 
             <div className={'basis-5/12 flex flex-col gap-4'}>

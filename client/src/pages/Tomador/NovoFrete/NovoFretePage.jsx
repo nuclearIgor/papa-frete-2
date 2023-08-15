@@ -8,6 +8,9 @@ import Revisao from "./Revisao.jsx";
 import axios from "axios";
 import {baseUrl} from "../../../App.jsx";
 import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {postNovoFrete} from "./requests.js";
+import {useNavigate} from "react-router-dom";
 
 const NovoFretePage = () => {
     const [frete, setFrete] = useState({
@@ -66,23 +69,25 @@ const NovoFretePage = () => {
         setFormState(4)
     }
 
+    const queryClient = useQueryClient()
+
+    const postNovoFreteMutation = useMutation({
+        mutationFn: () => postNovoFrete(frete, token),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['meus-fretes']})
+        }
+    })
+
+    const navigate = useNavigate()
+
     const onSubmit = async () => {
         setLoading(true)
         console.log('frete: \n', frete)
-        try {
-            const res = await axios.post(`${baseUrl}/api/fretes`,
-                frete, {
-                    headers: {
-                        authorization: `Bearer ${token}`
-                    }
-                })
 
-            console.log(res)
-            setLoading(false)
-        } catch (e) {
-            console.log(e)
-            setLoading(false)
-        }
+        postNovoFreteMutation.mutate()
+
+        setLoading(false)
+        navigate('/meus-fretes')
     }
 
     function handleBackButton() {
