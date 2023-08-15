@@ -19,10 +19,12 @@ const LoginPage = () => {
 
         if (!data) {
             toast.error('algo deu errado :( \ntente novamente em alguns minutos')
+            setLoading(false)
             return
         }
         if (data === 'usuario ou senha incorretos') {
             toast.error('usuario ou senha incorretos')
+            setLoading(false)
             return
         }
 

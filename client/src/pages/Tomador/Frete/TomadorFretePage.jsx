@@ -59,18 +59,19 @@ const TomadorFretePage = ( ) => {
                 </div>
             </div>
 
-            {pageState === 'edit' ?
-                <EditFrete frete={data?.frete}/>
-                : null
-            }
-            {pageState === 'pendentes' ?
-                <CandidaturasPendentes candidaturas={candidaturasPendentes}/>
-                : null
-            }
-            {pageState === 'aceitas' ?
-                <CandidaturasAceitas candidaturas={candidaturasAceitas}/>
-                : null
-            }
+
+                {pageState === 'edit' ?
+                    <EditFrete frete={data?.frete}/>
+                    : null
+                }
+                {pageState === 'pendentes' ?
+                    <CandidaturasPendentes candidaturas={candidaturasPendentes}/>
+                    : null
+                }
+                {pageState === 'aceitas' ?
+                    <CandidaturasAceitas candidaturas={candidaturasAceitas}/>
+                    : null
+                }
         </div>
     );
 };
