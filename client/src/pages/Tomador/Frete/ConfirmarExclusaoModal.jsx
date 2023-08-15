@@ -2,11 +2,14 @@
 
 import { Button, Modal } from 'flowbite-react';
 
-export default function ConfirmarExclusaoModal({buttonText, isOpen, setOpen, onAccept}) {
+export default function ConfirmarExclusaoModal({buttonText, isOpen, setOpen, onAccept, onDecline}) {
 
     return (
         <>
-            <button onClick={() => setOpen('pop-up')}>
+            <button
+                className={'btn bg-red-600 text-white'}
+                onClick={() => setOpen('pop-up')}
+            >
                 {/*Toggle modal*/}
                 {buttonText}
             </button>

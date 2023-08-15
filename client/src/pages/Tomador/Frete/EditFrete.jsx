@@ -5,7 +5,7 @@ import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx
 import {useNavigate} from "react-router-dom";
 import LoadingScreen from "../../../components/Loading.jsx";
 import {AiFillEdit} from "react-icons/ai";
-import ConfirmarExclusaoModal from "./Modal.jsx";
+import ConfirmarExclusaoModal from "./ConfirmarExclusaoModal.jsx";
 import {ESTADOS} from "../../../../util/cidades.js";
 import DatePicker from "react-datepicker";
 import {brDateToUtc} from "../../../../util/brDateToUtc.js";
