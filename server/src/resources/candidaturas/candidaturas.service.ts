@@ -56,8 +56,32 @@ async function getCandidaturasByPrestadorId (userId: string) {
     }
 }
 
+async function updateCandidaturaAceita (candidaturaId: string, userId: string) {
+    try {
+
+        const [candidatura, tomador] = await Promise.all([
+            await candidaturasRepository.getCandidaturaById(candidaturaId),
+            await tomadorRepository.getTomadorByUserId(userId)
+        ])
+
+        if (!candidatura || !tomador) {
+            throw new ApplicationError('bad request', 400)
+        }
+
+        if (candidatura.Frete.Tomador.id !== tomador.id) {
+            throw new ApplicationError('proibido', 403)
+        }
+
+        return await candidaturasRepository.updateCandidaturaAceita(candidaturaId)
+    } catch (e: any) {
+        console.log(e)
+        throw new ApplicationError(e.message, e.statusCode)
+    }
+}
+
 export const candidaturasService = {
     createCandidatura,
     getCandidaturasByFreteId,
-    getCandidaturasByPrestadorId
+    getCandidaturasByPrestadorId,
+    updateCandidaturaAceita
 }

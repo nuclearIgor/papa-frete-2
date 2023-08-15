@@ -47,9 +47,42 @@ async function getCandidaturasByPrestadorId (prestadorId: string) {
     })
 }
 
+async function updateCandidaturaAceita (candidaturaId: string) {
+    return prisma.candidatura.update({
+        where: {
+            id: candidaturaId
+        },
+        data: {
+            aceita: true,
+            aceitaEm: new Date()
+        }
+    })
+}
+
+async function getCandidaturaById (candidaturaId: string) {
+    return prisma.candidatura.findUnique({
+        where: {
+            id: candidaturaId
+        },
+        include: {
+            Frete: {
+                include: {
+                    Tomador: {
+                        select: {
+                            id: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
 export const candidaturasRepository = {
     createCandidatura,
     getCandidaturaByFreteAndTomadorId,
     getCandidaturasByFreteId,
-    getCandidaturasByPrestadorId
+    getCandidaturasByPrestadorId,
+    updateCandidaturaAceita,
+    getCandidaturaById
 }

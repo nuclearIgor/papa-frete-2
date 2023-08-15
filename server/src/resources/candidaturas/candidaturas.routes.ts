@@ -9,5 +9,6 @@ const candidaturasRouter = Router()
 candidaturasRouter.post('/', validateDataSchemaAndStoreInResLocals(createCandidaturaSchema, 'freteId'), validateToken, candidaturasController.createCandidatura)
 candidaturasRouter.get('/:freteId', validateToken, candidaturasController.getCandidaturasByFreteId)
 candidaturasRouter.get('/prestador/me', validateToken, candidaturasController.getCandidaturasByPrestadorId)
+candidaturasRouter.patch('/candidatura/:candidaturaId/aceita', validateToken, candidaturasController.updateCandidaturaAceita)
 
 export default candidaturasRouter

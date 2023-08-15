@@ -31,3 +31,42 @@ export async function deleteFrete(freteId, token) {
         throw e
     }
 }
+
+export async function fetchFrete (freteId, token) {
+    try {
+        const { data } = await axios.get(`${baseUrl}/api/fretes/frete/${freteId}`, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
+        return data
+    } catch (e) {
+        throw e
+    }
+}
+
+export async function updateCandidaturaAceitaRequest (candidaturaId, token) {
+    try {
+        const { data } = await axios.patch(`${baseUrl}/api/candidaturas/candidatura/${candidaturaId}/aceita`, {}, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
+        return data
+    } catch (e) {
+        throw e
+    }
+}
+
+export async function updateCandidaturaRecusadaRequest (candidaturaId, token) {
+    try {
+        const { data } = await axios.patch(`${baseUrl}/api/candidaturas/candidatura/${candidaturaId}/recusada`, {}, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
+        return data
+    } catch (e) {
+        throw e
+    }
+}

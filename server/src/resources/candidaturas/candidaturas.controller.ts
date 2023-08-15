@@ -36,8 +36,22 @@ async function getCandidaturasByPrestadorId (req: Request, res: Response, next: 
     }
 }
 
+async function updateCandidaturaAceita (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
+    const { candidaturaId } = req.params
+
+    try {
+        const candidatura = await candidaturasService.updateCandidaturaAceita(candidaturaId, userId)
+        return res.json({candidatura})
+    } catch (e) {
+        console.log(e)
+        next(e)
+    }
+}
+
 export const candidaturasController = {
     createCandidatura,
     getCandidaturasByFreteId,
-    getCandidaturasByPrestadorId
+    getCandidaturasByPrestadorId,
+    updateCandidaturaAceita
 }

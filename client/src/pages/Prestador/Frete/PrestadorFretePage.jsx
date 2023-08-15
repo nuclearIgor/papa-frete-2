@@ -14,7 +14,7 @@ const PrestadorFretePage = () => {
 
 
     const { data, loading } = useQuery({
-        queryKey: ['frete'],
+        queryKey: ['prestador-frete'],
         queryFn: () => fetchFrete(freteId, token)
     })
 
@@ -24,7 +24,7 @@ const PrestadorFretePage = () => {
     const postCandidaturaMutation = useMutation({
         mutationFn: () => postCandidatura(freteId, token),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['frete']})
+            queryClient.invalidateQueries({ queryKey: ['prestador-frete']})
         }
     })
 

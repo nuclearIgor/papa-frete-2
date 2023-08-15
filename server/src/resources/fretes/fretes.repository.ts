@@ -79,7 +79,11 @@ async function fetchFreteById (freteId: string) {
             id: freteId
         },
         include: {
-            Candidatura: true,
+            Candidatura: {
+                include: {
+                    Prestador: true
+                },
+            },
             Tomador: {
                 select: {
                     nomeFantasia: true,
