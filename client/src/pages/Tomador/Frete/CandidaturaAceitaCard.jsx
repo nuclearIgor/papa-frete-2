@@ -28,7 +28,7 @@ const CandidaturaAceitaCard = ({candidatura}) => {
             </div>
             <details className={'w-10/12 mx-auto'}>
                 <summary className={'p-4'}>ver mais</summary>
-                <div className={'w-full flex justify-between gap-4'}>
+                <div className={'w-full flex justify-between h-screen gap-4'}>
                     <div className={'basis-1/4'}>
                         <h4 className={'font-bold'}>endereco</h4>
                         <p>rua: {candidatura.Prestador.rua}</p>

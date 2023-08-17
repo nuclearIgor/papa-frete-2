@@ -26,7 +26,7 @@ async function fetchFretesByTomadorId(req: Request, res: Response, next: NextFun
 }
 
 async function fetchAllFretes(req: Request, res: Response, next: NextFunction) {
-    console.log(req.query)
+    console.log('frete query:\n',req.query)
 
     try {
         const fretes = await fretesService.fetchAllFretes()

@@ -1,6 +1,6 @@
 import FreteCard from "./FreteCard.jsx";
 import Filtros from "./Filtros.jsx";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import Cookie from "universal-cookie/es6";
 import {useQuery} from "@tanstack/react-query";
 import {fetchFretes} from "./requests.js";
@@ -114,31 +114,39 @@ const fretes = [
 const cookies = new Cookie();
 
 const FretesPage = () => {
+    const [freteFilters, setFreteFilters] = useState({})
 
     const { token } = useContext(AuthContext)
 
-    const { data, loading } = useQuery({
+    const  query  = useQuery({
         queryKey: ['fretes'],
-        queryFn: () => fetchFretes(token)
+        queryFn: () => fetchFretes(freteFilters, token)
     })
 
-    useEffect(() => {
-        // const userData = cookies.get('userData')
-        // console.log(userData)
-        console.log('data:', data)
-    }, [data])
+    // useEffect(() => {
+    //     console.log('data:', data)
+    // }, [data])
 
-    if ( loading ) return <LoadingScreen/>
+
+    const onSubmitFiltros = (values) => {
+        setFreteFilters(values)
+        console.log(values)
+        setTimeout(() => {
+            query.refetch()
+        }, 100)
+    }
+
+    if ( query?.isLoading ) return <LoadingScreen/>
 
     return (
         <div className={'flex p-6 gap-2'}>
             <div className={'basis-3/12'}>
-                <Filtros/>
+                <Filtros onSubmit={onSubmitFiltros}/>
             </div>
 
             <div className={'basis-9/12'}>
                 {/*{fretes.map((frete, i) => <FreteCard key={`${frete.id}${i}`} frete={frete}/>)}*/}
-                {data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)}
+                {query?.data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)}
             </div>
         </div>
     );

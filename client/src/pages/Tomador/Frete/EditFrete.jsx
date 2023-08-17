@@ -146,8 +146,11 @@ const EditFrete = ({frete}) => {
                             <span className="label-text">Oculto</span>
                             <input
                                 type="checkbox"
+                                id={"visivelOculto"}
+                                name={'visivelOculto'}
                                 className="toggle toggle-primary mx-2"
                                 disabled={!isEditing}
+                                checked={editedFrete.visivel}
                                 onChange={e => setEditedFrete((prevState) => {
                                     console.log(e.target.checked)
                                     return {
@@ -155,9 +158,8 @@ const EditFrete = ({frete}) => {
                                         visivel: e.target.checked
                                     }
                                 })}
-                                // value={editedFrete.visivel}
                             />
-                            {/*<span className="label-text">Visivel</span>*/}
+                            <span className="label-text">Visivel</span>
                         </label>
 
                     </div>

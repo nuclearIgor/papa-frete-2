@@ -3,21 +3,37 @@ import {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Filtros = () => {
-    const [ufOrigem, setUfOrigem] = useState('estado')
-    const [ufDestino, setUfDestino] = useState('estado')
+const initialState = {
+    ufOrigem: 'estado',
+    cidadeOrigem: 'cidade',
+    cidadeDestino: 'cidade',
+    ufDestino: 'estado',
+    startDate: new Date(),
+    dataColetaCheckbox: false,
+    coletaLivre: false,
+    // pedagio: false,
+    // pernoite: false,
+    // carga: false,
+    // descarga: false,
+}
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [dataColetaCheckbox, setDataColetaCheckbox] = useState(false);
-    const [coletaLivre, setColetaLivre] = useState(false);
+const Filtros = ({onSubmit}) => {
 
-    const [pedagio, setPedagio] = useState(false)
-    const [pernoite, setPernoite] = useState(false)
-    const [carga, setCarga] = useState(false)
-    const [descarga, setDescarga] = useState(false)
+    const [filtrosState, setFiltrosState] = useState({
+        ...initialState
+    })
+
+    const handleSubmit = () => {
+        onSubmit(filtrosState)
+    }
+
+    const limparFiltros = () => {
+        setFiltrosState({...initialState})
+        onSubmit({})
+    }
 
     return (
-        <div className={'border h-fit m-4 rounded-md overflow-scroll'}>
+        <div className={'border w-full h-fit m-4 rounded-md overflow-scroll'}>
             <h5 className={'bg-papaBlue rounded-md text-white w-full h-12 text-center flex items-center justify-center'}
             >filte por preferencias</h5>
 
@@ -26,7 +42,12 @@ const Filtros = () => {
                     <span className="label-text font-bold">Origem</span>
                 </label>
                 <select
-                    onChange={e => setUfOrigem(e.target.value)}
+                    onChange={e => setFiltrosState((prevState) => {
+                        return {
+                            ...prevState,
+                            ufOrigem: e.target.value,
+                        }
+                    })}
                     name="ufOrigem"
                     id="ufOrigem"
                     defaultValue={'estado'}
@@ -40,11 +61,17 @@ const Filtros = () => {
                 <select
                     name="cidadeOrigem"
                     id="cidadeOrigem"
-                    defaultValue={'cidade'}
+                    defaultValue={filtrosState.cidadeOrigem}
                     className={'select select-bordered'}
+                    onChange={e => setFiltrosState((prevState) => {
+                        return {
+                            ...prevState,
+                            cidadeOrigem: e.target.value,
+                        }
+                    })}
                 >
                     <option value="cidade" disabled>Cidade</option>
-                    {ufOrigem !== 'estado' && ESTADOS[`${ufOrigem}`].map(item =>
+                    {filtrosState.ufOrigem !== 'estado' && ESTADOS[`${filtrosState.ufOrigem}`].map(item =>
                         <option value={item.nome} key={item.nome}>{item.nome}</option>)}
                 </select>
             </div>
@@ -54,7 +81,12 @@ const Filtros = () => {
                     <span className="label-text font-bold">Destino</span>
                 </label>
                 <select
-                    onChange={e => setUfDestino(e.target.value)}
+                    onChange={e => setFiltrosState((prevState) => {
+                        return {
+                            ...prevState,
+                            ufDestino: e.target.value,
+                        }
+                    })}
                     name="ufDestino"
                     id="ufDestino"
                     defaultValue={'estado'}
@@ -70,9 +102,15 @@ const Filtros = () => {
                     id="cidadeDestino"
                     defaultValue={'cidade'}
                     className={'select select-bordered'}
+                    onChange={e => setFiltrosState((prevState) => {
+                        return {
+                            ...prevState,
+                            cidadeDestino: e.target.value,
+                        }
+                    })}
                 >
                     <option value="cidade" disabled>Cidade</option>
-                    {ufDestino !== 'estado' && ESTADOS[`${ufDestino}`].map(item =>
+                    {filtrosState.ufDestino !== 'estado' && ESTADOS[`${filtrosState.ufDestino}`].map(item =>
                         <option value={item.nome} key={item.nome}>{item.nome}</option>)}
                 </select>
             </div>
@@ -86,17 +124,31 @@ const Filtros = () => {
                         type="checkbox"
                         className="checkbox mr-4"
                         id={"dataColetaCheckbox"}
-                        name={'coletalivre'}
-                        value={dataColetaCheckbox}
-                        onChange={(e) =>
-                            setDataColetaCheckbox(e.target.checked)
-                        }
+                        name={'dataColetaCheckbox'}
+                        checked={filtrosState.dataColetaCheckbox}
+                        onChange={e => setFiltrosState((prevState) => {
+                            return {
+                                ...prevState,
+                                dataColetaCheckbox: e.target.checked,
+                            }
+                        })}
+                        // onChange={(e) =>
+                        //     setDataColetaCheckbox(e.target.checked)
+                        // }
                     />
                     <DatePicker
-                        disabled={!dataColetaCheckbox}
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        className={`w-3/4 text-center rounded-md ${!dataColetaCheckbox ? 'bg-gray-200' : 'bg-green-200'}`}
+                        dateFormat={'dd/MM/yyyy'}
+                        disabled={!filtrosState.dataColetaCheckbox}
+                        selected={filtrosState.startDate}
+                        // onChange={(date) => setStartDate(date)}
+                        onChange={date => setFiltrosState((prevState) => {
+                            console.log(date)
+                            return {
+                                ...prevState,
+                                startDate: date,
+                            }
+                        })}
+                        className={`w-3/4 text-center rounded-md ${!filtrosState.dataColetaCheckbox ? 'bg-gray-200' : 'bg-green-200'}`}
                     />
                 </div>
 
@@ -105,77 +157,96 @@ const Filtros = () => {
                         name={'coletalivre'}
                         type="checkbox"
                         className="checkbox mr-4"
-                        id={"dataColetaCheckbox"}
-                        value={dataColetaCheckbox}
-                        onChange={(e) =>
-                            setDataColetaCheckbox(e.target.checked)
-                        }
+                        id={"coletalivre"}
+                        checked={filtrosState.coletaLivre}
+                        onChange={e => setFiltrosState((prevState) => {
+                            return {
+                                ...prevState,
+                                coletaLivre: e.target.checked,
+                            }
+                        })}
                     />
                     <p>Coleta Livre</p>
                 </div>
 
-                <div className={'flex flex-col items-center'}>
-                    <label className="label">
-                        <span className="label-text font-bold">Oferece</span>
-                    </label>
+                {/*<div className={'flex flex-col items-center'}>*/}
+                {/*    <label className="label">*/}
+                {/*        <span className="label-text font-bold">Oferece</span>*/}
+                {/*    </label>*/}
 
-                    <div className={'flex justify-start w-full mb-2'}>
-                        <input
-                            type="checkbox"
-                            className="checkbox mr-4"
-                            id={"pegadio"}
-                            value={pedagio}
-                            onChange={(e) =>
-                                setPedagio(e.target.checked)
-                            }
-                        />
-                        <p>pedagio</p>
-                    </div>
+                {/*    <div className={'flex justify-start w-full mb-2'}>*/}
+                {/*        <input*/}
+                {/*            type="checkbox"*/}
+                {/*            className="checkbox mr-4"*/}
+                {/*            id={"pegadio"}*/}
+                {/*            name={"pegadio"}*/}
+                {/*            checked={filtrosState.pedagio}*/}
+                {/*            onChange={e => setFiltrosState((prevState) => {*/}
+                {/*                return {*/}
+                {/*                    ...prevState,*/}
+                {/*                    pedagio: e.target.checked,*/}
+                {/*                }*/}
+                {/*            })}*/}
+                {/*        />*/}
+                {/*        <p>pedagio</p>*/}
+                {/*    </div>*/}
 
-                    <div className={'flex justify-start w-full mb-2'}>
-                        <input
-                            type="checkbox"
-                            className="checkbox mr-4"
-                            id={"pernoite"}
-                            value={pernoite}
-                            onChange={(e) =>
-                                setPernoite(e.target.checked)
-                            }
-                        />
-                        <p>pernoite</p>
-                    </div>
+                {/*    <div className={'flex justify-start w-full mb-2'}>*/}
+                {/*        <input*/}
+                {/*            type="checkbox"*/}
+                {/*            className="checkbox mr-4"*/}
+                {/*            id={"pernoite"}*/}
+                {/*            name={"pernoite"}*/}
+                {/*            checked={filtrosState.pernoite}*/}
+                {/*            onChange={e => setFiltrosState((prevState) => {*/}
+                {/*                return {*/}
+                {/*                    ...prevState,*/}
+                {/*                    pernoite: e.target.checked,*/}
+                {/*                }*/}
+                {/*            })}*/}
+                {/*        />*/}
+                {/*        <p>pernoite</p>*/}
+                {/*    </div>*/}
 
-                    <div className={'flex justify-start w-full mb-2'}>
-                        <input
-                            type="checkbox"
-                            className="checkbox mr-4"
-                            id={"carga"}
-                            value={carga}
-                            onChange={(e) =>
-                                setCarga(e.target.checked)
-                            }
-                        />
-                        <p>carga</p>
-                    </div>
+                {/*    <div className={'flex justify-start w-full mb-2'}>*/}
+                {/*        <input*/}
+                {/*            type="checkbox"*/}
+                {/*            className="checkbox mr-4"*/}
+                {/*            id={"carga"}*/}
+                {/*            name={"carga"}*/}
+                {/*            checked={filtrosState.carga}*/}
+                {/*            onChange={e => setFiltrosState((prevState) => {*/}
+                {/*                return {*/}
+                {/*                    ...prevState,*/}
+                {/*                    carga: e.target.checked,*/}
+                {/*                }*/}
+                {/*            })}*/}
+                {/*        />*/}
+                {/*        <p>carga</p>*/}
+                {/*    </div>*/}
 
-                    <div className={'flex justify-start w-full mb-2'}>
-                        <input
-                            type="checkbox"
-                            className="checkbox mr-4"
-                            id={"descarga"}
-                            value={descarga}
-                            onChange={(e) =>
-                                setDescarga(e.target.checked)
-                            }
-                        />
-                        <p>pedagio</p>
-                    </div>
-                </div>
+                {/*    <div className={'flex justify-start w-full mb-2'}>*/}
+                {/*        <input*/}
+                {/*            type="checkbox"*/}
+                {/*            className="checkbox mr-4"*/}
+                {/*            id={"descarga"}*/}
+                {/*            name={"descarga"}*/}
+                {/*            checked={filtrosState.descarga}*/}
+                {/*            onChange={e => setFiltrosState((prevState) => {*/}
+                {/*                return {*/}
+                {/*                    ...prevState,*/}
+                {/*                    descarga: e.target.checked,*/}
+                {/*                }*/}
+                {/*            })}*/}
+                {/*        />*/}
+                {/*        <p>pedagio</p>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             <div className={'my-4 flex flex-col items-center gap-2'}>
-                <button className={'btn w-28 bg-papaYellow'}>Aplicar filtros</button>
-                <button className={'btn w-28 bg-white border-2 border-papaYellow'}>Limpar filtros</button>
+                <button onClick={handleSubmit} className={'btn w-28 bg-papaYellow'}>Aplicar filtros</button>
+                <button onClick={limparFiltros} className={'btn w-28 bg-white border-2 border-papaYellow'}>Limpar filtros</button>
             </div>
         </div>
     );
