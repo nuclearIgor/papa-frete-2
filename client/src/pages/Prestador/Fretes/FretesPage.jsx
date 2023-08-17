@@ -131,8 +131,10 @@ const FretesPage = () => {
     const onSubmitFiltros = (values) => {
         setFreteFilters(values)
         console.log(values)
-        setTimeout(() => {
-            query.refetch()
+        setTimeout(async () => {
+            await query.refetch()
+            // setFreteFilters({})
+
         }, 100)
     }
 
@@ -145,8 +147,13 @@ const FretesPage = () => {
             </div>
 
             <div className={'basis-9/12'}>
-                {/*{fretes.map((frete, i) => <FreteCard key={`${frete.id}${i}`} frete={frete}/>)}*/}
-                {query?.data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)}
+
+                    {query.data.fretes.length > 0 ?
+                        query?.data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)
+                        :
+                        <div className={'font-semibold text-xl text-center pt-10'}>Nao houveram resultados para essa busca</div>
+                    }
+
             </div>
         </div>
     );

@@ -147,7 +147,8 @@ async function updateFrete ({
     oferecePernoite,
     oferecePedagio,
     reaisPorKm,
-    observacoes
+    observacoes,
+    visivel
                             }: UpdateFreteDTO) {
     return prisma.frete.update({
         where: {
@@ -170,7 +171,8 @@ async function updateFrete ({
             oferecePernoite,
             oferecePedagio,
             reaisPorKm,
-            observacoes
+            observacoes,
+            visivel
         }
     })
 }
@@ -183,6 +185,141 @@ async function deleteFrete(freteId: string) {
     })
 }
 
+async function fetchFretesByUfOrigem (ufOrigem: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufOrigem
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
+async function fetchFretesByUfOrigemECidadeOrigem (ufOrigem: string, cidadeOrigem: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufOrigem,
+            cidadeOrigem
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
+async function fetchFretesByUfOrigemCidadeOrigemEUfDestino (ufOrigem: string, cidadeOrigem: string, ufDestino: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufOrigem,
+            cidadeOrigem,
+            ufDestino
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
+async function fetchFretesByUfOrigemCidadeOrigemUfDestinoECidadeDestino (
+        ufOrigem: string,
+        cidadeOrigem: string,
+        ufDestino: string,
+        cidadeDestino: string
+    ) {
+        return prisma.frete.findMany({
+            where: {
+                ufOrigem,
+                cidadeOrigem,
+                ufDestino,
+                cidadeDestino
+            },
+            include: {
+                Tomador: {
+                    select: {
+                        nomeFantasia: true
+                    }
+                }
+            }
+        })
+}
+
+async function fetchFretesByUfOrigemEUfDestino (ufOrigem: string, ufDestino: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufOrigem,
+            ufDestino
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
+async function fetchFretesByUfOrigemUfDestinoECidadeDestino (ufOrigem: string, ufDestino: string, cidadeDestino: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufOrigem,
+            ufDestino,
+            cidadeDestino
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
+async function fetchFretesByUfDestinoECidadeDestino (ufDestino: string, cidadeDestino: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufDestino,
+            cidadeDestino
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
+async function fetchFretesByUfDestino (ufDestino: string) {
+    return prisma.frete.findMany({
+        where: {
+            ufDestino,
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            }
+        }
+    })
+}
+
 export const fretesRepository = {
     createFrete,
     fetchAllFretes,
@@ -191,5 +328,16 @@ export const fretesRepository = {
     updateFrete,
     deleteFrete,
     fetchFreteByIdTomador,
-    fetchFreteByIdPrestador
+    fetchFreteByIdPrestador,
+
+    fetchFretesByUfOrigem,
+    fetchFretesByUfOrigemECidadeOrigem,
+    fetchFretesByUfOrigemCidadeOrigemEUfDestino,
+    fetchFretesByUfOrigemCidadeOrigemUfDestinoECidadeDestino,
+
+    fetchFretesByUfOrigemEUfDestino,
+    fetchFretesByUfOrigemUfDestinoECidadeDestino,
+
+    fetchFretesByUfDestino,
+    fetchFretesByUfDestinoECidadeDestino,
 }

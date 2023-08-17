@@ -31,6 +31,8 @@ export interface UpdateFreteDTO {
     id: string
     tomadorId: string
 
+    visivel: boolean
+
     ufOrigem: string
     cidadeOrigem: string
 

@@ -39,10 +39,71 @@ async function fetchFretesByTomadorId(userId: string) {
         throw new ApplicationError(e.message, 400)
     }
 }
-
-async function fetchAllFretes() {
+// ufOrigem: string | undefined,
+//     cidadeOrigem: string | undefined,
+//     cidadeDestino: string | undefined,
+//     ufDestino: string | undefined,
+//     startDatecoletaLivre: string | undefined
+async function fetchAllFretes(
+        ufOrigem: string | undefined,
+        cidadeOrigem: string | undefined,
+        cidadeDestino: string | undefined,
+        ufDestino: string | undefined,
+        startDate: string | undefined,
+        coletaLivre: string | undefined
+) {
+    console.log('ufo', [!!ufOrigem, !!cidadeOrigem, !!ufDestino, !!cidadeDestino])
     try {
+
+        // caso de somente ufOrigem na query
+        if(Boolean(ufOrigem) && !Boolean(cidadeOrigem) && !Boolean(ufDestino) && !Boolean(cidadeDestino)){
+            console.log('case 1', )
+            return await fretesRepository.fetchFretesByUfOrigem(String(ufOrigem))
+        }
+        // caso ufOrigem e cidadeOrigem na query
+        else if(Boolean(ufOrigem) && Boolean(cidadeOrigem) && !Boolean(ufDestino) && !Boolean(cidadeDestino)){
+            console.log('case 2', )
+            return await fretesRepository.fetchFretesByUfOrigemECidadeOrigem(String(ufOrigem), String(cidadeOrigem))
+        }
+        // caso ufOrigem, cidadeOrigem, e ufDestino na query
+        else if(Boolean(ufOrigem) && Boolean(cidadeOrigem) && !Boolean(ufDestino) && !Boolean(cidadeDestino)){
+            console.log('case 3', )
+            return await fretesRepository.fetchFretesByUfOrigemCidadeOrigemEUfDestino(String(ufOrigem), String(cidadeOrigem), String(ufDestino))
+        }
+        // caso ufOrigem, cidadeOrigem, ufDestino e cidadeDestino na query
+        else if(Boolean(ufOrigem) && Boolean(cidadeOrigem) && !Boolean(ufDestino) && !Boolean(cidadeDestino)){
+            console.log('case 4', )
+            return await fretesRepository.fetchFretesByUfOrigemCidadeOrigemUfDestinoECidadeDestino(
+                String(ufOrigem), String(cidadeOrigem), String(ufDestino), String(cidadeDestino))
+        }
+
+
+        // caso ufOrigem e ufDestino  na query
+        else if(Boolean(ufOrigem) && !Boolean(cidadeOrigem) && Boolean(ufDestino) && !Boolean(cidadeDestino)){
+            console.log('case 5', )
+            return await fretesRepository.fetchFretesByUfOrigemEUfDestino(String(ufOrigem),  String(ufDestino))
+        }  // caso ufOrigem, ufDestino cidadeDestino na query
+        else if(Boolean(ufOrigem) && !Boolean(cidadeOrigem) && Boolean(ufDestino) && Boolean(cidadeDestino)){
+            console.log('case 6', )
+            return await fretesRepository.fetchFretesByUfOrigemUfDestinoECidadeDestino(String(ufOrigem),  String(ufDestino), String(cidadeDestino))
+        }
+
+
+        // caso ufDestino e cidadeDestino na query
+        else if(!Boolean(ufOrigem) && !Boolean(cidadeOrigem) && Boolean(ufDestino) && Boolean(cidadeDestino)){
+            console.log('case 7', )
+            return await fretesRepository.fetchFretesByUfDestinoECidadeDestino(String(ufDestino), String(cidadeDestino))
+        } // caso ufDestino na query
+        else if(!Boolean(ufOrigem) && !Boolean(cidadeOrigem) && Boolean(ufDestino) && !Boolean(cidadeDestino)){
+            console.log('case 8', )
+            return await fretesRepository.fetchFretesByUfDestino(String(ufDestino))
+        }
+
+
+
+        console.log('default')
         return await fretesRepository.fetchAllFretes()
+
     } catch (e: any) {
         console.log(e)
         throw new ApplicationError(e.message, 400)

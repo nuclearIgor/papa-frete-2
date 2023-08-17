@@ -29,7 +29,9 @@ const Filtros = ({onSubmit}) => {
 
     const limparFiltros = () => {
         setFiltrosState({...initialState})
-        onSubmit({})
+        setTimeout(() => {
+            onSubmit(initialState)
+        }, 100)
     }
 
     return (
@@ -51,6 +53,7 @@ const Filtros = ({onSubmit}) => {
                     name="ufOrigem"
                     id="ufOrigem"
                     defaultValue={'estado'}
+                    value={filtrosState.ufOrigem}
                     className={'select select-bordered'}
                 >
                     <option value="estado" disabled>Estado</option>
@@ -69,6 +72,7 @@ const Filtros = ({onSubmit}) => {
                             cidadeOrigem: e.target.value,
                         }
                     })}
+                    value={filtrosState.cidadeOrigem}
                 >
                     <option value="cidade" disabled>Cidade</option>
                     {filtrosState.ufOrigem !== 'estado' && ESTADOS[`${filtrosState.ufOrigem}`].map(item =>
@@ -87,6 +91,7 @@ const Filtros = ({onSubmit}) => {
                             ufDestino: e.target.value,
                         }
                     })}
+                    value={filtrosState.ufDestino}
                     name="ufDestino"
                     id="ufDestino"
                     defaultValue={'estado'}
@@ -108,6 +113,7 @@ const Filtros = ({onSubmit}) => {
                             cidadeDestino: e.target.value,
                         }
                     })}
+                    value={filtrosState.cidadeDestino}
                 >
                     <option value="cidade" disabled>Cidade</option>
                     {filtrosState.ufDestino !== 'estado' && ESTADOS[`${filtrosState.ufDestino}`].map(item =>

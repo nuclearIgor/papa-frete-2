@@ -27,9 +27,24 @@ async function fetchFretesByTomadorId(req: Request, res: Response, next: NextFun
 
 async function fetchAllFretes(req: Request, res: Response, next: NextFunction) {
     console.log('frete query:\n',req.query)
+    const {
+        ufOrigem,
+        cidadeOrigem,
+        cidadeDestino,
+        ufDestino,
+        startDate,
+        coletaLivre
+    } = req.query
 
     try {
-        const fretes = await fretesService.fetchAllFretes()
+        const fretes = await fretesService.fetchAllFretes(
+            ufOrigem,
+            cidadeOrigem,
+            cidadeDestino,
+            ufDestino,
+            startDate,
+            coletaLivre
+        )
         res.status(200).json({fretes})
     } catch (e) {
         next(e)
