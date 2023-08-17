@@ -62,9 +62,11 @@ async function updateFrete (req: Request, res: Response, next: NextFunction) {
 
 async function fetchFreteById (req: Request, res: Response, next: NextFunction) {
     const { freteId } = req.params
+    const { userId } = res.locals
+    const { tipoDeConta } = res.locals
 
     try {
-        const frete = await fretesService.fetchFreteById(freteId)
+        const frete = await fretesService.fetchFreteById(freteId, userId, tipoDeConta)
         res.status(200).json({frete})
     } catch (e) {
         next(e)

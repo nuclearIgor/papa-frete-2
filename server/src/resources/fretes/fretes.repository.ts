@@ -1,5 +1,6 @@
 import { prisma } from "../../../database";
 import {CreateFreteDTO, UpdateFreteDTO} from "./fretes.protocols";
+import {string} from "joi";
 
 async function createFrete ({
                                 ufOrigem,
@@ -93,6 +94,41 @@ async function fetchFreteById (freteId: string) {
     })
 }
 
+async function fetchFreteByIdPrestador (freteId: string, prestadorId: string) {
+    return prisma.frete.findUnique({
+        where: {
+            id: freteId
+        },
+        include: {
+            Tomador: {
+                select: {
+                    nomeFantasia: true
+                }
+            },
+            Candidatura: {
+                where: {
+                    prestadorId
+                }
+            }
+        }
+
+    })
+}
+
+async function fetchFreteByIdTomador (freteId: string) {
+    return prisma.frete.findUnique({
+        where: {
+            id: freteId
+        },
+        include: {
+            Candidatura: {
+                include: {
+                    Prestador: true
+                },
+            },
+        }
+    })
+}
 async function updateFrete ({
     id,
     ufOrigem,
@@ -153,5 +189,7 @@ export const fretesRepository = {
     fetchFretesByTomadorId,
     fetchFreteById,
     updateFrete,
-    deleteFrete
+    deleteFrete,
+    fetchFreteByIdTomador,
+    fetchFreteByIdPrestador
 }

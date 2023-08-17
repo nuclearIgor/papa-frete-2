@@ -2,6 +2,7 @@ import {tomadorRepository} from "../tomadores/tomadores.repository";
 import {ApplicationError} from "../common/applicationError";
 import {fretesRepository} from "./fretes.repository";
 import {CreateFreteDTO, UpdateFreteDTO} from "./fretes.protocols";
+import {prestadorRepository} from "../prestadores/prestadores.repository";
 
 async function createFrete(data: CreateFreteDTO, userId: string) {
     if (!data['veiculoAlvo']) {
@@ -63,9 +64,27 @@ async function updateFrete(userId: string, frete: UpdateFreteDTO) {
     }
 }
 
-async function fetchFreteById(freteId: string) {
+async function fetchFreteById(freteId: string, userId: string, tipoDeConta: string) {
     try {
-        const frete = await fretesRepository.fetchFreteById(freteId)
+        let frete
+
+        if (tipoDeConta === 'prestador') {
+            const prestador = await prestadorRepository.getPrestadorByUserId(userId)
+            if(!prestador) {
+                throw new ApplicationError('wrong prestador', 400)
+            }
+
+            frete = await fretesRepository.fetchFreteByIdPrestador(freteId, prestador.id)
+        }
+
+        if (tipoDeConta === 'tomador') {
+            const tomador = await tomadorRepository.getTomadorByUserId(userId)
+            if(!tomador) {
+                throw new ApplicationError('wrong tomador', 400)
+            }
+
+            frete = await fretesRepository.fetchFreteByIdTomador(freteId)
+        }
 
         if (!frete) {
             throw new ApplicationError('not found', 404)
