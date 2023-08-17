@@ -6,6 +6,7 @@ import {fetchFrete, postCandidatura} from "./requests.js";
 import LoadingScreen from "../../../components/Loading.jsx";
 import {AiOutlineCheck} from "react-icons/ai";
 import ConfirmarCandidaturaModal from "./Modal.jsx";
+import {brDateToUtc} from "../../../../util/brDateToUtc.js";
 
 const PrestadorFretePage = () => {
     const { freteId } = useParams()
@@ -13,7 +14,7 @@ const PrestadorFretePage = () => {
     const { token } = useContext(AuthContext)
 
 
-    const { data, loading } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ['prestador-frete'],
         queryFn: () => fetchFrete(freteId, token)
     })
@@ -38,29 +39,58 @@ const PrestadorFretePage = () => {
 
     const { userData } = useContext(AuthContext)
 
-    const jaCandidatou = data?.frete?.Candidatura.filter(c => c.tomadorId !== userData?.id)
 
-    useEffect(() => {
-        // const userData = cookies.get('userData')
-        // console.log(userData)
-        console.log('data:', data)
-    }, [data])
+    // useEffect(() => {
+    //     // const userData = cookies.get('userData')
+    //     // console.log(userData)
+    //     console.log('ja candidatou:', jaCandidatou)
+    // }, [jaCandidatou])
 
-    if (loading) return <LoadingScreen/>
+    if (isLoading) return <LoadingScreen/>
 
     return (
         <div className={'m-4 p-4 border border-papaYellow rounded-box'}>
             <div className={'flex'}>
-                <h4 className={'text-center flex-1'}>
-                    Empresa:
-                    <span className={'ml-1 font-bold'}>
-                        {data?.frete?.Tomador.nomeFantasia}
-                    </span>
 
-                </h4>
 
-                {jaCandidatou?.length > 0 ?
-                    <p>Voce se candidatou em {new Date(jaCandidatou[0].createdAt).toLocaleString('pt-BR').slice(0, 10)}</p>
+                {data?.frete?.Candidatura?.length > 0 ?
+                    <div className={'flex flex-col w-full mb-2 justify-center items-center'}>
+                        <p>Voce se candidatou em {new Date(data?.frete?.Candidatura[0]?.createdAt).toLocaleString('pt-BR').slice(0, 10)}</p>
+                        <div className={'flex flex-col justify-center items-center'}>
+                            { data?.frete?.Candidatura[0]?.aceita === null ?
+                                <div className={'flex flex-col justify-center items-center'}>
+                                    <p className="font-semibold">status</p>
+                                    <p className={'badge badge-info w-24 h-10 font-semibold'}>pendente</p>
+                                </div> : null
+                            }
+                            { data?.frete?.Candidatura[0]?.aceita === true ?
+                                <>
+                                    <p className={'badge badge-success w-24 h-10 font-semibold'}>aceita</p>
+                                    <p>aceita em:
+                                        <span className={'ml-1'}>
+                                        {new Date(data?.frete?.Candidatura[0]?.aceitaEm).toLocaleString('pt-BR').slice(0, 10)}
+                                        {/*{new Date(brDateToUtc(data?.frete?.Candidatura[0]?.aceitaEm)).toLocaleString('pt-BR').slice(0, 10)}*/}
+                                    </span>
+                                    </p>
+                                    <p className={'font-light'}>Aguarde o tomador do frete entrar em contato</p>
+                                </>
+                                : null
+                            }
+                            { data?.frete?.Candidatura[0]?.aceita === false ?
+                                <div className={'flex flex-col justify-center items-center'}>
+                                    <span className={'badge badge-error w-24 h-10 font-semibold'}>recusada</span>
+                                    <p>recusada em:
+                                        <span className={'ml-1'}>
+                                        {new Date(data?.frete?.Candidatura[0]?.aceitaEm).toLocaleString('pt-BR').slice(0, 10)}
+                                     </span>
+                                    </p>
+                                    <p className={'font-light'}>Voce nao pode se recandidatar</p>
+                                </div>
+                                : null
+                            }
+
+                        </div>
+                    </div>
                     :
                     <ConfirmarCandidaturaModal
                         buttonText={'Candidatar'}
@@ -69,9 +99,19 @@ const PrestadorFretePage = () => {
                         onAccept={onAccept}
                     />
                 }
+
                 {/*<button className={'btn self-end bg-papaYellow'}>Candidatar</button>*/}
             </div>
+            <h4 className={'text-center flex-1 mt-2 pt-2 border-t-2 border-papaYellow'}>
+                Empresa:
+                <span className={'ml-1 font-bold'}>
+                        {data?.frete?.Tomador.nomeFantasia}
+                    </span>
+
+            </h4>
+
             <div className={'flex gap-4 justify-center py-2 max-w-sm mx-auto'}>
+
                 <div className={'flex flex-col'}>
                     <p className={'font-semibold'}>Origem</p>
                     <p>{data?.frete?.cidadeOrigem}-{data?.frete?.ufOrigem}</p>
