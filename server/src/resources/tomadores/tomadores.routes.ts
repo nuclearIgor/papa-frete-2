@@ -5,7 +5,7 @@ import { RegisterSchema } from '../users/user.protocols';
 import {
     UpdateDadosDaEmpresaSchema,
     UpdateDadosDoContatoSchema,
-    UpdateDadosDoEnderecoSchema
+    UpdateDadosDoEnderecoSchema, UpdateFotoDePerfilSchema
 } from './tomadores.protocols';
 import {validateToken} from "../auth/auth.middleware";
 
@@ -15,6 +15,7 @@ tomadoresRouter.post('/create', validateDataSchemaAndStoreInResLocals(RegisterSc
 tomadoresRouter.patch('/:tomadorId/dados-empresa',  validateDataSchemaAndStoreInResLocals(UpdateDadosDaEmpresaSchema, 'dadosDaEmpresa'), tomadoresController.updateDadosDaEmpresa)
 tomadoresRouter.patch('/:tomadorId/dados-contato', validateDataSchemaAndStoreInResLocals(UpdateDadosDoContatoSchema, 'dadosDoContato'), tomadoresController.updateDadosDoContato)
 tomadoresRouter.patch('/:tomadorId/dados-endereco', validateDataSchemaAndStoreInResLocals(UpdateDadosDoEnderecoSchema, 'dadosDoEndereco'), tomadoresController.updateDadosDoEndereco)
+tomadoresRouter.patch('/:tomadorId/foto-perfil', validateDataSchemaAndStoreInResLocals(UpdateFotoDePerfilSchema, 'fotoData'), tomadoresController.updateFotoDePerfilData)
 tomadoresRouter.get('/me', validateToken, tomadoresController.getTomadorByuserId)
 
 export default tomadoresRouter

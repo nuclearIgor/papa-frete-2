@@ -49,6 +49,8 @@ model Tomador {
   ddd           String?
   telefone      String?
 
+  fotoDePerfilData String?
+
   cep         String?
   estado      String?
   cidade      String?
@@ -57,10 +59,13 @@ model Tomador {
   numero      String?
   complemento String?
 
+  cadastroCompleto Boolean @default(false)
+
   Frete Frete[] @relation("TomadorFrete")
 
   // Frete         Frete[]
   @@index([cnpj])
+  @@index([userId])
   @@map("tomadores")
 }
 
@@ -76,6 +81,8 @@ model Prestador {
   cpf      String? @unique
   ddd      String?
   telefone String?
+
+  fotoDePerfilData String?
 
   cep         String?
   estado      String?
@@ -95,9 +102,13 @@ model Prestador {
   tipoDaCarroceria String?
 
   anoDeFabricacaoDoVeiculo String?
-  Candidatura              Candidatura[] @relation("PrestadorCandidatura")
+
+  cadastroCompleto Boolean @default(false)
+
+  Candidatura Candidatura[] @relation("PrestadorCandidatura")
 
   @@index([cpf])
+  @@index([userId])
   @@map("prestadores")
 }
 

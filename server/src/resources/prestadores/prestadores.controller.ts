@@ -69,10 +69,29 @@ async function getPrestadorByUserId (req: Request, res: Response) {
     }
 }
 
+async function updateFotoDePerfilData (req: Request, res: Response) {
+    const { fotoData } = res.locals
+    const { prestadorId } = req.params
+    const size = req.headers['content-length']
+    console.log(size)
+
+    try {
+        const prestador = await prestadoresService.updateFotoDePerfilData(fotoData.fotoData, prestadorId)
+        return res.json({ prestador })
+    } catch (e) {
+        console.log(e)
+        return res.status(500).json({
+            status: 'error',
+            message: 'something went wrong'
+        })
+    }
+}
+
 export const prestadoresController = {
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,
     updateDadosDoEndereco,
-    getPrestadorByUserId
+    getPrestadorByUserId,
+    updateFotoDePerfilData
 }

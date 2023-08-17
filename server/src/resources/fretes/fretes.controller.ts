@@ -4,6 +4,9 @@ import { fretesService } from './fretes.service';
 async function createFrete(req: Request, res: Response, next: NextFunction) {
     const { freteData } = res.locals
     const { userId } = res.locals
+
+    const size = req.headers['content-length']
+    console.log(size)
     //
     // console.log('fretedata: \n', freteData)
     try {
@@ -38,6 +41,7 @@ async function fetchAllFretes(req: Request, res: Response, next: NextFunction) {
 
     try {
         const fretes = await fretesService.fetchAllFretes(
+        // @ts-ignore
             ufOrigem,
             cidadeOrigem,
             cidadeDestino,

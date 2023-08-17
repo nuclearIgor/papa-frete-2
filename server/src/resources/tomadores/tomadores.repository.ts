@@ -82,6 +82,17 @@ async function getTomadorById (tomadorId: string) {
     })
 }
 
+async function updateFotoDePerfilData (fotoData: string, tomadorId: string) {
+    return prisma.tomador.update({
+        where: {
+            id: tomadorId
+        },
+        data: {
+            fotoDePerfilData: fotoData
+        }
+    })
+}
+
 export const tomadorRepository = {
     createTomador,
     updateDadosDoEndereco,
@@ -89,5 +100,6 @@ export const tomadorRepository = {
     updateDadosDoContato,
     findByCnpj,
     getTomadorByUserId,
-    getTomadorById
+    getTomadorById,
+    updateFotoDePerfilData
 }

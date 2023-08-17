@@ -4,7 +4,7 @@ import { validateDataSchemaAndStoreInResLocals } from '../common/middleware/vali
 import {
     UpdateDadosDoEnderecoSchema,
     UpdateDadosDoVeiculoSchema,
-    UpdateDadosPessoaisSchema
+    UpdateDadosPessoaisSchema, UpdateFotoDePerfilSchema
 } from './prestadores.protocols';
 import { RegisterSchema } from '../users/user.protocols';
 import { validateToken } from '../auth/auth.middleware';
@@ -15,6 +15,7 @@ prestadoresRouter.post('/create', validateDataSchemaAndStoreInResLocals(Register
 prestadoresRouter.patch('/:prestadorId/dados-pessoais', validateDataSchemaAndStoreInResLocals(UpdateDadosPessoaisSchema, 'dadosPessoaisData'), prestadoresController.updateDadosPessoais)
 prestadoresRouter.patch('/:prestadorId/dados-veiculo', validateDataSchemaAndStoreInResLocals(UpdateDadosDoVeiculoSchema, 'dadosDoVeiculoData'), prestadoresController.updateDadosDoVeiculo)
 prestadoresRouter.patch('/:prestadorId/dados-endereco', validateDataSchemaAndStoreInResLocals(UpdateDadosDoEnderecoSchema, 'dadosDoEnderecoData'), prestadoresController.updateDadosDoEndereco)
+prestadoresRouter.patch('/:prestadorId/foto-perfil', validateDataSchemaAndStoreInResLocals(UpdateFotoDePerfilSchema, 'fotoData'), prestadoresController.updateFotoDePerfilData)
 prestadoresRouter.get('/me', validateToken, prestadoresController.getPrestadorByUserId)
 
 export default prestadoresRouter

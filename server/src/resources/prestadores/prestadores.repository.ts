@@ -96,6 +96,17 @@ async function getPrestadorById (prestadorId: string) {
     })
 }
 
+async function updateFotoDePerfilData (fotoData: string, prestadorId: string) {
+    return prisma.prestador.update({
+        where: {
+            id: prestadorId
+        },
+        data: {
+            fotoDePerfilData: fotoData,
+        }
+    })
+}
+
 export const prestadorRepository = {
     createPrestador,
     updateDadosPessoais,
@@ -103,5 +114,6 @@ export const prestadorRepository = {
     updateDadosDoEndereco,
     findByCpf,
     getPrestadorByUserId,
-    getPrestadorById
+    getPrestadorById,
+    updateFotoDePerfilData
 }

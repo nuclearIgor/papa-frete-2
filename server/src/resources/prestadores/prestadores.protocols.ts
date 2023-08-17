@@ -57,3 +57,7 @@ export const UpdateDadosDoEnderecoSchema = Joi.object({
     complemento: Joi.any().optional(),
     // complemento: Joi.string().presence('optional'),
 })
+
+export const UpdateFotoDePerfilSchema = Joi.object({
+    fotoData: Joi.string().required(),
+})

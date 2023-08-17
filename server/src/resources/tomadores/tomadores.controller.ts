@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {tomadoresService} from "./tomadores.service";
+import {prestadoresService} from "../prestadores/prestadores.service";
 
 async function createTomador (req: Request, res: Response, next: NextFunction) {
     const { registerData } = res.locals
@@ -58,10 +59,28 @@ async function getTomadorByuserId (req: Request, res: Response, next: NextFuncti
     }
 }
 
+
+
+async function updateFotoDePerfilData (req: Request, res: Response) {
+    const { fotoData } = res.locals
+    const { tomadorId } = req.params
+
+    try {
+        const tomador = await tomadoresService.updateFotoDePerfilData(fotoData.fotoData, tomadorId)
+        return res.json({ tomador })
+    } catch (e) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'something went wrong'
+        })
+    }
+}
+
 export const tomadoresController = {
     createTomador,
     updateDadosDoEndereco,
     updateDadosDaEmpresa,
     updateDadosDoContato,
-    getTomadorByuserId
+    getTomadorByuserId,
+    updateFotoDePerfilData
 }

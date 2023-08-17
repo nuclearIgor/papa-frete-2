@@ -55,10 +55,20 @@ async function getPrestadorByUserId (userId: string) {
     }
 }
 
+async function updateFotoDePerfilData (fotoData: string, prestadorId: string) {
+    try {
+        return await prestadorRepository.updateFotoDePerfilData(fotoData, prestadorId)
+    } catch (e) {
+        console.log(e)
+        return  false
+    }
+}
+
 export const prestadoresService = {
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,
     getPrestadorByUserId,
-    updateDadosDoEndereco
+    updateDadosDoEndereco,
+    updateFotoDePerfilData
 }

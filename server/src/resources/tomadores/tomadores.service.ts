@@ -3,6 +3,7 @@ import {userService} from "../users/users.service";
 import {ApplicationError} from "../common/applicationError";
 import {tomadorRepository} from "./tomadores.repository";
 import { UpdateDadosDaEmpresaDTO, UpdateDadosDoContatoDTO, UpdateDadosDoEnderecoDTO } from './tomadores.protocols';
+import {prestadorRepository} from "../prestadores/prestadores.repository";
 
 async function createTomador({email, senha, tipoDeConta}: RegisterDTO) {
     const user = await userService.createUser({email, senha, tipoDeConta})
@@ -56,10 +57,21 @@ async function getTomadorByuserId (userId: string) {
     }
 }
 
+
+async function updateFotoDePerfilData (fotoData: string, tomadorId: string) {
+    try {
+        return await tomadorRepository.updateFotoDePerfilData(fotoData, tomadorId)
+    } catch (e) {
+        console.log(e)
+        return  false
+    }
+}
+
 export const tomadoresService = {
     createTomador,
     updateDadosDoEndereco,
     updateDadosDaEmpresa,
     updateDadosDoContato,
-    getTomadorByuserId
+    getTomadorByuserId,
+    updateFotoDePerfilData
 }
