@@ -5,6 +5,8 @@ module.exports = {
     exec_mode: "cluster",
     instances: 5,
 
+    listen_timeout: 8000,
+
     env_production: {
       NODE_ENV: "production"
     },
