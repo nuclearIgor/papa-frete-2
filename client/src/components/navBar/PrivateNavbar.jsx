@@ -40,7 +40,7 @@ const PrivateNavbar = () => {
                                 </summary>
                                 <ul className="p-2 bg-base-100">
                                     <li>
-                                        <Link to={'/perfil'}>
+                                        <Link to={`/${userData?.tipoDeConta}/editar-perfil`}>
                                             <div>
                                                 Editar perfil
                                             </div>

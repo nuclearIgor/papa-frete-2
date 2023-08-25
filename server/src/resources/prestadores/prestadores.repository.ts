@@ -1,17 +1,15 @@
 import { prisma } from "../../../database";
 import {UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO, UpdateDadosDoEnderecoDTO} from "./prestadores.protocols";
 
-async function updateDadosPessoais ({nomeCompleto, cpf, ddd, celular, cnh, categoriaCNH}: UpdateDadosPessoaisDTO, prestadorId: string) {
+async function updateDadosPessoais ({nomeCompleto, ddd, celular, categoriaCNH}: UpdateDadosPessoaisDTO, prestadorId: string) {
     return prisma.prestador.update({
         where: {
             id: prestadorId
         },
         data: {
             nome: nomeCompleto,
-            cpf,
             ddd,
             telefone: celular,
-            cnh,
             categoriaCNH
         },
         // select: {

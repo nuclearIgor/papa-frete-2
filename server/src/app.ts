@@ -10,11 +10,12 @@ import candidaturasRouter from "./resources/candidaturas/candidaturas.routes";
 
 const app = express()
 
+
 app.use(cors({
     origin: ['https://monkfish-app-qk6za.ondigitalocean.app/*', 'http://localhost:5173']
 }))
 
-app.use(express.json({ limit: '3mb'}))
+app.use(express.json({ limit: '2mb'}))
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
 app.use('/api/auth', authRouter)

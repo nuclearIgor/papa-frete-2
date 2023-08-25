@@ -13,6 +13,7 @@ import MeusFretesPage from "../pages/Tomador/MeusFretes/MeusFretesPage.jsx";
 import TomadorFretePage from "../pages/Tomador/Frete/TomadorFretePage.jsx";
 import PrestadorFretePage from "../pages/Prestador/Frete/PrestadorFretePage.jsx";
 import MinhasCandidaturasPage from "../pages/Prestador/Candidaturas/MinhasCandidaturasPage.jsx";
+import EditarPerfilPrestadorPage from "../pages/Prestador/Perfil/EditarPerfil/EditarPerfilPage.jsx";
 
 const AppRouter = () => {
     return (
@@ -53,6 +54,14 @@ const AppRouter = () => {
             </Route>
 
             <Route element={<PrivateNavbar/>}>
+                    <Route
+                        path={'/prestador/editar-perfil'}
+                        element={
+                            <AuthenticatedRoute>
+                                <EditarPerfilPrestadorPage />
+                            </AuthenticatedRoute>
+                        }
+                    />
                     <Route
                         path={'/fretes/:freteId'}
                         element={

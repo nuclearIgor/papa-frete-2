@@ -14,22 +14,37 @@ async function createPrestador({email, senha, tipoDeConta}: RegisterDTO) {
     }
 }
 
-async function updateDadosPessoais(data: UpdateDadosPessoaisDTO, prestadorId: string) {
-    const prestadorByCpf = await prestadorRepository.findByCpf(data.cpf)
-    if (prestadorByCpf) {
-        throw new ApplicationError('cpf taken', 409)
-    }
+async function updateDadosPessoais(data: UpdateDadosPessoaisDTO, prestadorId: string, userId: string) {
 
     try {
+        const prestador = await prestadorRepository.getPrestadorByUserId(userId)
+        console.log(prestador)
+        if (!prestador){
+            throw new ApplicationError('prestador nao existe', 400)
+        }
+
+        if (prestador.id !== prestadorId) {
+            throw new ApplicationError('proibido', 403)
+        }
+
         return await prestadorRepository.updateDadosPessoais(data, prestadorId)
     } catch (e: any) {
         console.log(e)
-        throw new ApplicationError(e.message, 400)
+        throw new ApplicationError(e.message, e.statusCode)
     }
 }
 
-async function updateDadosDoVeiculo (data: UpdateDadosDoVeiculoDTO, prestadorId: string) {
+async function updateDadosDoVeiculo (data: UpdateDadosDoVeiculoDTO, prestadorId: string, userId: string) {
     try {
+        const prestador = await prestadorRepository.getPrestadorByUserId(userId)
+        if (!prestador){
+            throw new ApplicationError('prestador nao existe', 400)
+        }
+
+        if (prestador.id !== prestadorId) {
+            throw new ApplicationError('proibido', 403)
+        }
+
         return await prestadorRepository.updateDadosDoVeiculo(data, prestadorId)
     } catch (e) {
         console.log(e)
@@ -37,8 +52,17 @@ async function updateDadosDoVeiculo (data: UpdateDadosDoVeiculoDTO, prestadorId:
     }
 }
 
-async function updateDadosDoEndereco (data: UpdateDadosDoEnderecoDTO, prestadorId: string) {
+async function updateDadosDoEndereco (data: UpdateDadosDoEnderecoDTO, prestadorId: string, userId: string) {
     try {
+        const prestador = await prestadorRepository.getPrestadorByUserId(userId)
+        if (!prestador){
+            throw new ApplicationError('prestador nao existe', 400)
+        }
+
+        if (prestador.id !== prestadorId) {
+            throw new ApplicationError('proibido', 403)
+        }
+
         return await prestadorRepository.updateDadosDoEndereco(data, prestadorId)
     } catch (e) {
         console.log(e)

@@ -82,6 +82,11 @@ model Prestador {
   ddd      String?
   telefone String?
 
+  cnh          String?
+  categoriaCNH String?
+
+  cadastroDadosPessoais Boolean @default(false)
+
   fotoDePerfilData String?
 
   cep         String?
@@ -92,8 +97,7 @@ model Prestador {
   numero      String?
   complemento String?
 
-  cnh          String?
-  categoriaCNH String?
+  cadastroEndereco Boolean @default(false)
 
   placaDoVeiculo String?
   anttDoVeiculo  String?
@@ -102,6 +106,8 @@ model Prestador {
   tipoDaCarroceria String?
 
   anoDeFabricacaoDoVeiculo String?
+
+  cadastroDadosDoVeiculo Boolean @default(false)
 
   cadastroCompleto Boolean @default(false)
 

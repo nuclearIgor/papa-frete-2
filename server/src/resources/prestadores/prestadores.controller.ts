@@ -13,11 +13,12 @@ async function createPrestador (req: Request, res: Response, next: NextFunction)
 }
 
 async function updateDadosPessoais(req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
     const { dadosPessoaisData } = res.locals
     const { prestadorId } = req.params
 
     try {
-        const prestador = await prestadoresService.updateDadosPessoais(dadosPessoaisData, prestadorId)
+        const prestador = await prestadoresService.updateDadosPessoais(dadosPessoaisData, prestadorId, userId)
         return res.json({ prestador })
     } catch (e) {
         console.log(e)
@@ -26,11 +27,12 @@ async function updateDadosPessoais(req: Request, res: Response, next: NextFuncti
 }
 
 async function updateDadosDoEndereco (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
     const { dadosDoEnderecoData } = res.locals
     const { prestadorId } = req.params
 
     try {
-        const prestador = await prestadoresService.updateDadosDoEndereco(dadosDoEnderecoData, prestadorId)
+        const prestador = await prestadoresService.updateDadosDoEndereco(dadosDoEnderecoData, prestadorId, userId)
         return res.json({ prestador })
     } catch (e) {
         console.log(e)
@@ -39,11 +41,12 @@ async function updateDadosDoEndereco (req: Request, res: Response, next: NextFun
 }
 
 async function updateDadosDoVeiculo (req: Request, res: Response) {
+    const { userId } = res.locals
     const { dadosDoVeiculoData } = res.locals
     const { prestadorId } = req.params
 
     try {
-        const prestador = await prestadoresService.updateDadosDoVeiculo(dadosDoVeiculoData, prestadorId)
+        const prestador = await prestadoresService.updateDadosDoVeiculo(dadosDoVeiculoData, prestadorId, userId)
         return res.json({ prestador })
     } catch (e) {
         console.log(e)
