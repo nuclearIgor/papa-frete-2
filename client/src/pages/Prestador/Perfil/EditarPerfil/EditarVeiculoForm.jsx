@@ -69,10 +69,10 @@ const EditarVeiculoForm = ({
         <>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={'max-w-md mt-5 mx-auto rounded-box bg-gray-300 p-10'}
+                className={'max-w-md mt-5 mx-auto rounded-box bg-base-100 p-10 border border-papaYellow'}
             >
                 <div className={'flex justify-end gap-6 items-center max-w-xs mb-2'}>
-                    <h4 className={'text-center text-papaBlue'}>Endereco</h4>
+                    <h4 className={'text-center text-papaBlue'}>Veiculo</h4>
 
                     <button className={'btn btn-primary w-24'} type={'submit'}>
                         {loading ? (

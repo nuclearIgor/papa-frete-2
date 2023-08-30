@@ -134,7 +134,7 @@ const EditarEnderecoForm = ({ prestadorData, token, handleReload }) => {
         <>
             <form
                 onSubmit={handleSubmit(handleFormSubmit)}
-                className={'max-w-md mt-5 mx-auto border border-papaYellow rounded-box bg-gray-300 p-10'}
+                className={'max-w-md mt-5 mx-auto border border-papaYellow rounded-box bg-base-100 p-10'}
             >
                 <div className={'flex justify-end gap-6 items-center max-w-xs mb-2'}>
                     <h4 className={'text-center text-papaBlue'}>Endereco</h4>

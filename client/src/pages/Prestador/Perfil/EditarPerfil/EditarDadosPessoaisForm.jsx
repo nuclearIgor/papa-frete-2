@@ -77,7 +77,7 @@ const EditarDadosPessoaisForm = ({
         <>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={'max-w-md mt-5 mx-auto rounded-box bg-gray-300 p-10 border border-papaYellow'}
+                className={'max-w-md mt-5 mx-auto rounded-box bg-base-100 p-10 border border-papaYellow'}
             >
                 <div className={'flex justify-end gap-6 items-center max-w-xs mb-2'}>
                         <h4 className={'text-center text-papaBlue'}>Dados Pessoais</h4>
