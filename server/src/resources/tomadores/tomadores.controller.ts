@@ -14,11 +14,12 @@ async function createTomador (req: Request, res: Response, next: NextFunction) {
 }
 
 async function updateDadosDaEmpresa (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
     const { dadosDaEmpresa } = res.locals
     const { tomadorId } = req.params
 
     try {
-        const tomador = await tomadoresService.updateDadosDaEmpresa(dadosDaEmpresa, tomadorId)
+        const tomador = await tomadoresService.updateDadosDaEmpresa(dadosDaEmpresa, tomadorId, userId)
         return res.json({tomador})
     } catch (e) {
         next(e)
@@ -26,11 +27,12 @@ async function updateDadosDaEmpresa (req: Request, res: Response, next: NextFunc
 }
 
 async function updateDadosDoContato (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
     const { dadosDoContato } = res.locals
     const { tomadorId } = req.params
 
     try {
-        const tomador = await tomadoresService.updateDadosDoContato(dadosDoContato, tomadorId)
+        const tomador = await tomadoresService.updateDadosDoContato(dadosDoContato, tomadorId, userId)
         return res.json({tomador})
     } catch (e) {
         next(e)
@@ -38,11 +40,12 @@ async function updateDadosDoContato (req: Request, res: Response, next: NextFunc
 }
 
 async function updateDadosDoEndereco (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
     const { dadosDoEndereco } = res.locals
     const { tomadorId } = req.params
 
     try {
-        const tomador = await tomadoresService.updateDadosDoEndereco(dadosDoEndereco, tomadorId)
+        const tomador = await tomadoresService.updateDadosDoEndereco(dadosDoEndereco, tomadorId, userId)
         return res.json({tomador})
     } catch (e) {
         next(e)

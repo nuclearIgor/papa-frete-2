@@ -16,35 +16,60 @@ async function createTomador({email, senha, tipoDeConta}: RegisterDTO) {
     }
 }
 
-async function updateDadosDaEmpresa (data: UpdateDadosDaEmpresaDTO, tomadorId: string) {
-    const tomadorByCnpj = await tomadorRepository.findByCnpj(data.cnpj)
-    if (tomadorByCnpj) {
-        throw new ApplicationError('cnpj taken', 409)
-    }
-
+async function updateDadosDaEmpresa (data: UpdateDadosDaEmpresaDTO, tomadorId: string, userId: string) {
     try {
+        const tomador = await tomadorRepository.getTomadorByUserId(userId)
+
+        if(!tomador) {
+            throw new ApplicationError('tomador nao existe', 400)
+        }
+
+        if (tomador.id !== tomadorId) {
+            throw new ApplicationError('proibido', 403)
+        }
+
         return await tomadorRepository.updateDadosDaEmpresa(data, tomadorId)
     } catch (e: any) {
         console.log(e)
-        throw new ApplicationError(e.message, 400)
+        throw new ApplicationError(e.message, e.statusCode)
     }
 }
 
-async function updateDadosDoContato (data: UpdateDadosDoContatoDTO, tomadorId: string) {
+async function updateDadosDoContato (data: UpdateDadosDoContatoDTO, tomadorId: string, userId: string) {
     try {
+        const tomador = await tomadorRepository.getTomadorByUserId(userId)
+
+        if(!tomador) {
+            throw new ApplicationError('tomador nao existe', 400)
+        }
+
+        if (tomador.id !== tomadorId) {
+            throw new ApplicationError('proibido', 403)
+        }
+
         return await tomadorRepository.updateDadosDoContato(data, tomadorId)
     } catch (e: any) {
         console.log(e)
-        throw new ApplicationError(e.message, 400)
+        throw new ApplicationError(e.message, e.statusCode)
     }
 }
 
-async function updateDadosDoEndereco (data: UpdateDadosDoEnderecoDTO, tomadorId: string) {
+async function updateDadosDoEndereco (data: UpdateDadosDoEnderecoDTO, tomadorId: string, userId: string) {
     try {
+        const tomador = await tomadorRepository.getTomadorByUserId(userId)
+
+        if(!tomador) {
+            throw new ApplicationError('tomador nao existe', 400)
+        }
+
+        if (tomador.id !== tomadorId) {
+            throw new ApplicationError('proibido', 403)
+        }
+
         return await tomadorRepository.updateDadosDoEndereco(data, tomadorId)
     } catch (e: any) {
         console.log(e)
-        throw new ApplicationError(e.message, 400)
+        throw new ApplicationError(e.message, e.statusCode)
     }
 }
 

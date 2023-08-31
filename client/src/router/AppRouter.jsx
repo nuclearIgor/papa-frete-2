@@ -14,6 +14,7 @@ import TomadorFretePage from "../pages/Tomador/Frete/TomadorFretePage.jsx";
 import PrestadorFretePage from "../pages/Prestador/Frete/PrestadorFretePage.jsx";
 import MinhasCandidaturasPage from "../pages/Prestador/Candidaturas/MinhasCandidaturasPage.jsx";
 import EditarPerfilPrestadorPage from "../pages/Prestador/Perfil/EditarPerfil/EditarPerfilPage.jsx";
+import EditarPerfilTomadorPage from "../pages/Tomador/perfil/EditarPerfil/EditarPerfilPage.jsx";
 
 const AppRouter = () => {
     return (
@@ -54,6 +55,14 @@ const AppRouter = () => {
             </Route>
 
             <Route element={<PrivateNavbar/>}>
+                    <Route
+                        path={'/tomador/editar-perfil'}
+                        element={
+                            <AuthenticatedRoute>
+                                <EditarPerfilTomadorPage />
+                            </AuthenticatedRoute>
+                        }
+                    />
                     <Route
                         path={'/prestador/editar-perfil'}
                         element={
