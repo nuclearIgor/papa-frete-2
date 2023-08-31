@@ -15,6 +15,8 @@ import PrestadorFretePage from "../pages/Prestador/Frete/PrestadorFretePage.jsx"
 import MinhasCandidaturasPage from "../pages/Prestador/Candidaturas/MinhasCandidaturasPage.jsx";
 import EditarPerfilPrestadorPage from "../pages/Prestador/Perfil/EditarPerfil/EditarPerfilPage.jsx";
 import EditarPerfilTomadorPage from "../pages/Tomador/perfil/EditarPerfil/EditarPerfilPage.jsx";
+import ForgotPassword from "../pages/Public/ResetPassword/ForgotPassword.jsx";
+import ResetPassword from "../pages/Public/ResetPassword/ResetPassword.jsx";
 
 const AppRouter = () => {
     return (
@@ -49,6 +51,22 @@ const AppRouter = () => {
                     element={
                         <PublicRoute>
                             <CadastroTomadorPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path={'/forgot-password'}
+                    element={
+                        <PublicRoute>
+                            <ForgotPassword />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path={'/password-reset'}
+                    element={
+                        <PublicRoute>
+                            <ResetPassword />
                         </PublicRoute>
                     }
                 />

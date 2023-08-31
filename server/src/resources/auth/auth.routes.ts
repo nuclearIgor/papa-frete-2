@@ -9,4 +9,6 @@ const authRouter = Router()
 authRouter.post('/login', validateLoginMiddleware, authController.login)
 authRouter.get('/validate-token', validateToken, authController.validateToken)
 authRouter.post('/change-password', validateDataSchemaAndStoreInResLocals(mudarSenhaSchema, 'mudarSenhaData'), validateToken, authController.changePassword)
+authRouter.post('/request-token', authController.requestResetPasswordToken)
+authRouter.post('/reset-password', authController.resetPassword)
 export default authRouter

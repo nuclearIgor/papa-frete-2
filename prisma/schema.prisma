@@ -27,10 +27,24 @@ model User {
 
   cadastroCompleto Boolean @default(false)
 
-  // ResetPasswordToken ResetPasswordToken? @relation("ResetTokenUser")
+  ResetPasswordToken ResetPasswordToken? @relation("ResetTokenUser")
+
   @@index([email])
   @@index([id])
   @@map("users")
+}
+
+model ResetPasswordToken {
+  id String @unique @default(uuid())
+
+  User   User   @relation("ResetTokenUser", fields: [userId], references: [id])
+  userId String @unique
+
+  token String
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Tomador {

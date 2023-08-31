@@ -33,11 +33,35 @@ async function changePassword (req: Request, res: Response, next: NextFunction) 
     } catch (e) {
         next(e)
     }
+}
 
+async function requestResetPasswordToken(req: Request, res: Response, next: NextFunction) {
+    const host = req.get('host')
+    const {email} = req.body
+
+    try {
+        const link = await authService.passwordResetRequestToken(email, host)
+        res.json({link})
+    } catch (e) {
+        next(e)
+    }
+}
+
+async function resetPassword(req: Request, res: Response, next: NextFunction) {
+    const { token, userId, password } = req.body
+
+    try {
+        await authService.resetPassword(token, userId, password)
+        res.json({msg: 'ok'})
+    } catch (e) {
+        next(e)
+    }
 }
 
 export const authController = {
     login,
     validateToken,
-    changePassword
+    changePassword,
+    requestResetPasswordToken,
+    resetPassword
 }

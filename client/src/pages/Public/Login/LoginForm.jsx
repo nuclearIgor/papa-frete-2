@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {Link} from "react-router-dom";
 
 const authSchema = yup.object({
     email: yup.string().email('email invalido').required('campo obrigatorio'),
@@ -61,6 +62,8 @@ const LoginForm = ({ onSubmit }) => {
                         placeholder={'senha'}
                         className="input input-bordered w-full max-w-xs"
                     />
+
+                    <Link className={'p-2 link text-sm text-blue-800'} to={'/forgot-password'}>esqueceu a senha?</Link>
                 </div>
 
                 <div className="flex mt-4 justify-center">
