@@ -1,10 +1,14 @@
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {baseUrl} from "../App.jsx";
 import toast from "react-hot-toast";
+import {AuthContext} from "../contexts/AuthContext/AuthContextProvider.jsx";
 
 
-const ChangePasswordForm = ({ token }) => {
+const ChangePasswordForm = () => {
+
+    const { token } = useContext(AuthContext)
+
     const [loading, setLoading] = useState(false);
 
     const [mostrarSenhas, setMostrarSenhas] = useState(false)

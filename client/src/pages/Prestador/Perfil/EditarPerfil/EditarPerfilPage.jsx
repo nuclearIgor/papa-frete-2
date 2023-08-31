@@ -30,7 +30,7 @@ const EditarPerfilPrestadorPage = () => {
                <EditarDadosPessoaisForm prestadorData={userData} token={token} handleReload={handleReload}/>
                <EditarEnderecoForm prestadorData={userData} token={token} handleReload={handleReload}/>
                <EditarVeiculoForm prestadorData={userData} token={token} handleReload={handleReload}/>
-               <ChangePasswordForm token={token}/>
+               <ChangePasswordForm />
            </div>
 
         </div>
