@@ -23,10 +23,21 @@ async function validateToken (req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function changePassword (req: Request, res: Response, next: NextFunction) {
+    const { userId } = res.locals
+    const { mudarSenhaData } = res.locals
 
+    try {
+        await authService.changePassword(userId, mudarSenhaData)
+        return res.sendStatus(204)
+    } catch (e) {
+        next(e)
+    }
 
+}
 
 export const authController = {
     login,
-    validateToken
+    validateToken,
+    changePassword
 }

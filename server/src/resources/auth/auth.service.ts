@@ -1,5 +1,5 @@
 import * as crypto from "crypto";
-import {loginDTO} from "./auth.protocols";
+import {loginDTO, mudarSenhaDTO} from "./auth.protocols";
 import {userRepository} from "../users/users.repository";
 import {ApplicationError} from "../common/applicationError";
 import {compare, hash} from "bcrypt";
@@ -47,6 +47,24 @@ async function login({email, senha}: loginDTO) {
     // return older_token
 }
 
+async function changePassword(userId: string, {senhaAtual, novaSenha}: mudarSenhaDTO) {
+    const user = await userRepository.getUserById(userId)
+
+    if(!user) {
+        throw new ApplicationError('wrong user', 401)
+    }
+
+    const passwordMatches = await compare(senhaAtual, user.passwordHash)
+    if(!passwordMatches) {
+        throw new ApplicationError('senha incorreta', 401)
+    }
+
+    const passwordHash = await hash(novaSenha, 12)
+    await userRepository.updateUserPassword(userId, passwordHash)
+
+}
+
 export const authService = {
-    login
+    login,
+    changePassword
 }

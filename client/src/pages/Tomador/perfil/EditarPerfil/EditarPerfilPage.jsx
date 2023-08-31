@@ -3,6 +3,7 @@ import {AuthContext} from "../../../../contexts/AuthContext/AuthContextProvider.
 import LoadingScreen from "../../../../components/Loading.jsx";
 import EditarContatoForm from "./EditarContatoForm.jsx";
 import EditarEnderecoForm from "./EditarEnderecoForm.jsx";
+import ChangePasswordForm from "../../../../components/changePasswordForm.jsx";
 
 const EditarPerfilTomadorPage = () => {
 
@@ -26,6 +27,7 @@ const EditarPerfilTomadorPage = () => {
             <div className={'pb-12'}>
                 <EditarContatoForm tomadorData={userData} token={token} handleReload={handleReload}/>
                 <EditarEnderecoForm tomadorData={userData} token={token} handleReload={handleReload}/>
+                <ChangePasswordForm/>
             </div>
 
         </div>

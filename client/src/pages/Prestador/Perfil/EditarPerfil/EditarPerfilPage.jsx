@@ -4,6 +4,7 @@ import LoadingScreen from "../../../../components/Loading.jsx";
 import EditarDadosPessoaisForm from "./EditarDadosPessoaisForm.jsx";
 import EditarEnderecoForm from "./EditarEnderecoForm.jsx";
 import EditarVeiculoForm from "./EditarVeiculoForm.jsx";
+import ChangePasswordForm from "../../../../components/changePasswordForm.jsx";
 
 
 const EditarPerfilPrestadorPage = () => {
@@ -29,6 +30,7 @@ const EditarPerfilPrestadorPage = () => {
                <EditarDadosPessoaisForm prestadorData={userData} token={token} handleReload={handleReload}/>
                <EditarEnderecoForm prestadorData={userData} token={token} handleReload={handleReload}/>
                <EditarVeiculoForm prestadorData={userData} token={token} handleReload={handleReload}/>
+               <ChangePasswordForm token={token}/>
            </div>
 
         </div>
