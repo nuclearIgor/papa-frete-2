@@ -2,28 +2,22 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 const PrestadorLinks = ({pathname}) => {
+    console.log(pathname === '/fretes')
     return (
         <>
             <li>
-                <Link to={'/fretes'}>
-                    <div
-                        className={`
-                                ${pathname === '/fretes' ? 'bg-white' : ''}
-                                rounded-2xl p-2 `}
-                    >
+                <Link to={'/fretes'}
+                      className={`${pathname === '/fretes' ? 'bg-white' : ''}
+                        rounded-2xl p-2 text-sm lg:text-base line-clamp-2 md:line-clamp-1 text-center`}
+                >
                         Encontre um frete
-                    </div>
                 </Link>
             </li>
             <li>
-                <Link to={'/minhas-candidaturas'}>
-                    <div
-                        className={`
-                            ${pathname === '/minhas-candidaturas' ? 'bg-white' : ''}
-                            `}
-                    >
+                <Link to={'/minhas-candidaturas'}
+                      className={`${pathname === '/minhas-candidaturas' ? 'bg-white' : ''}
+                        rounded-2xl p-2 text-sm lg:text-base`}>
                         Candidaturas
-                    </div>
                 </Link>
             </li>
         </>

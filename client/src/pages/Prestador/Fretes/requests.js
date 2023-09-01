@@ -47,8 +47,8 @@ export async function fetchFretes (filtros, token) {
     }
 
     const queryParams= str.length > 1 ? str.slice(0, -1) : ''
-    console.log('query:\n', queryParams)
-
+    // console.log('query:\n', queryParams)
+    // todo
     try {
         const { data } = await axios.get(`${baseUrl}/api/fretes${queryParams}`, {
             headers: {

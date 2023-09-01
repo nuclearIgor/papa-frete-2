@@ -142,17 +142,20 @@ const FretesPage = () => {
 
     return (
         <div className={'flex p-6 gap-2 bg-base-100'}>
-            <div className={'basis-3/12 hidden lg:block lg:w-96'}>
+            <div className={'hidden lg:block lg:basis-3/12 lg:w-96'}>
                 <Filtros onSubmit={onSubmitFiltros}/>
             </div>
 
-            <div className={'basis-9/12 flex-1 flex flex-col items-center'}>
+            <div className={'w-full lg:basis-7/12 flex-1 flex flex-col items-center'}>
 
                     {query.data.fretes.length > 0 ?
                         query?.data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)
                         :
                         <div className={'font-semibold text-xl text-center pt-10'}>Nao houveram resultados para essa busca</div>
                     }
+            </div>
+
+            <div className={'hidden lg:block lg:basis-2/12'}>
 
             </div>
         </div>

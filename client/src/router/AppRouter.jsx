@@ -17,6 +17,7 @@ import EditarPerfilPrestadorPage from "../pages/Prestador/Perfil/EditarPerfil/Ed
 import EditarPerfilTomadorPage from "../pages/Tomador/perfil/EditarPerfil/EditarPerfilPage.jsx";
 import ForgotPassword from "../pages/Public/ResetPassword/ForgotPassword.jsx";
 import ResetPassword from "../pages/Public/ResetPassword/ResetPassword.jsx";
+import MyNavbar from "../components/navBar/MyNavBar.jsx";
 
 const AppRouter = () => {
     return (
@@ -72,7 +73,8 @@ const AppRouter = () => {
                 />
             </Route>
 
-            <Route element={<PrivateNavbar/>}>
+            {/*<Route element={<PrivateNavbar/>}>*/}
+            <Route element={<MyNavbar/>}>
                     <Route
                         path={'/tomador/editar-perfil'}
                         element={

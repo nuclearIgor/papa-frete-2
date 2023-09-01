@@ -12,7 +12,8 @@ const PrivateNavbar = () => {
 
     useEffect(() => {
         handleReload()
-    }, [])
+        console.log(pathname)
+    }, [pathname])
 
     return (
         <>

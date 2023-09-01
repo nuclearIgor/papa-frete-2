@@ -30,7 +30,7 @@ const FreteCard = ({frete}) => {
     const navigate = useNavigate()
 
     return (
-        <div className={'flex py-4 m-4 rounded-md border border-gray-300 w-[650px]'}>
+        <div className={'flex py-4 m-4 rounded-md border border-gray-300 w-[400px] lg:w-[650px]'}>
             <div className={'basis-1/12 lg:basis-2/12 flex justify-center items-center  lg:p-4 ml-4'}>
                 <div className={'w-16 h-16 lg:w-28 lg:h-28 bg-base-200 rounded-full'}>
                     <BiSolidBusiness className={'w-full h-full'}/>
