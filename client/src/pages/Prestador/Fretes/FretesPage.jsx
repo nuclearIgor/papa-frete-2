@@ -141,12 +141,12 @@ const FretesPage = () => {
     if ( query?.isLoading ) return <LoadingScreen/>
 
     return (
-        <div className={'flex p-6 gap-2'}>
-            <div className={'basis-3/12'}>
+        <div className={'flex p-6 gap-2 bg-base-100'}>
+            <div className={'basis-3/12 hidden lg:block lg:w-96'}>
                 <Filtros onSubmit={onSubmitFiltros}/>
             </div>
 
-            <div className={'basis-9/12'}>
+            <div className={'basis-9/12 flex-1 flex flex-col items-center'}>
 
                     {query.data.fretes.length > 0 ?
                         query?.data?.fretes.map(frete => <FreteCard key={frete.id} frete={frete}/>)

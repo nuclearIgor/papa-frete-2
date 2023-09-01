@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {AiOutlineCheck, AiOutlineEye} from "react-icons/ai";
-import {RxAvatar} from "react-icons/rx";
 import {BsInfoCircleFill, BsTruck} from "react-icons/bs";
 import {AuthContext} from "../../../contexts/AuthContext/AuthContextProvider.jsx";
 import {useNavigate} from "react-router-dom";
+import {BiSolidBusiness} from "react-icons/bi";
 
 const FreteCard = ({frete}) => {
     const { userData } = useContext(AuthContext)
@@ -30,12 +30,14 @@ const FreteCard = ({frete}) => {
     const navigate = useNavigate()
 
     return (
-        <div className={'flex py-4 m-4 rounded-md border border-gray-300'}>
-            <div className={'basis-2/12 flex justify-center items-center'}>
-                <RxAvatar className={'w-32 h-32'}/>
+        <div className={'flex py-4 m-4 rounded-md border border-gray-300 w-[650px]'}>
+            <div className={'basis-1/12 lg:basis-2/12 flex justify-center items-center  lg:p-4 ml-4'}>
+                <div className={'w-16 h-16 lg:w-28 lg:h-28 bg-base-200 rounded-full'}>
+                    <BiSolidBusiness className={'w-full h-full'}/>
+                </div>
             </div>
 
-            <div className={'basis-5/12 flex flex-col gap-4'}>
+            <div className={'basis-6/12 flex flex-col gap-4'}>
                 <h5 className={'text-center px-2'}>Empresa: {Tomador?.nomeFantasia}</h5>
 
                 <div className={'flex justify-around px-2'}>
@@ -71,7 +73,7 @@ const FreteCard = ({frete}) => {
                 </div>
             </div>
 
-            <div className={'basis-3/12 flex flex-col items-center justify-between'}>
+            <div className={'basis-2/12 flex flex-col items-center justify-between'}>
                 <div className={'px-2'}>
                     <p className={'font-bold mb-2'}>Oferece:</p>
 
@@ -127,7 +129,7 @@ const FreteCard = ({frete}) => {
                 }
 
                 <button
-                    className={'flex items-center bg-papaYellow rounded-lg btn'}
+                    className={'flex items-center bg-papaYellow rounded-lg btn w-36 mt-2'}
                     onClick={() => navigate(`/fretes/${frete.id}`)}
                 >
                     Visualizar <AiOutlineEye/></button>
