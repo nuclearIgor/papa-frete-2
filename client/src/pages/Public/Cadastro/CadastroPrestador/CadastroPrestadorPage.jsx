@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { baseUrl } from "../../../../App.jsx";
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import LoadingScreen from "../../../../components/Loading.jsx";
 import EnderecoForm from "../EnderecoForm.jsx";
 import FotoDePerfilForm from "../FotoDePerfilForm.jsx";
+import DadosDeAutenticacaoPrestadorForm from "./DadosDeAutenticacaoPrestadorForm.jsx";
 
 const CadastroPrestadorPage = () => {
-    const [formState, setFormState] = useState(4);
+    const [formState, setFormState] = useState(0);
     const [prestadorData, setPrestadorData] = useState({});
 
     const [isComingBack, setIsComingBack] = useState(false);
@@ -20,108 +21,73 @@ const CadastroPrestadorPage = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log('prestadorData\n', prestadorData)
+    }, [prestadorData])
+
     async function onSubmitAuthForm(values) {
-        values['tipoDeConta'] = 'prestador';
-        // console.log(values)
-        // setFormState(1);
-        // return
+
+        setPrestadorData({
+            tipoDeConta: 'prestador',
+            ...values
+        })
+
+        setFormState(1)
+
+    }
+
+    async function onSubmitDadosPessoaisForm(values) {
+
+        setPrestadorData(prevState => {
+            return {
+                ...prevState,
+                ...values
+            }
+        })
+
+        setFormState(2)
+
+    }
+
+    const [enderecoLoading, setEnderecoLoading] = useState(false)
+
+    async function onSubmitDadosDoEndereco(values) {
+        setPrestadorData(prevState => {
+            return {
+                ...prevState,
+                ...values
+            }
+        })
+
+        setFormState(3)
+    }
+
+    async function onSubmitVeiculoForm(values) {
+        const payload = {
+            ...prestadorData,
+            ...values
+        }
+        setPrestadorData(payload)
+
+        // setFormState(4)
 
         setLoading(true);
 
         try {
             const res = await axios.post(
                 `${baseUrl}/api/prestadores/create`,
-                values,
+                payload,
             );
 
-            const { prestador } = res.data;
-            setPrestadorData({ ...prestador });
+            console.log(res)
 
             setLoading(false);
-            toast.success('sucesso');
-            setFormState(1);
-        } catch (e) {
-            console.log(e.response.data.message);
-            if (e.response.data.message === 'email taken') {
-                toast.error('email ja registrado');
-                setLoading(false);
-                return;
+            if (res.status === 201) {
+                setLoading(false)
+                toast.success('sucesso');
+                navigate('/login')
             }
-            console.log(e);
-            setLoading(false);
-            toast.error('algo deu errado \n tente novamente em alguns minutos');
-        }
-    }
-
-    async function onSubmitDadosPessoaisForm(values) {
-        if (values.cpf === prestadorData.cpf && isComingBack) {
-            setIsComingBack(false);
-            setFormState(2);
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            const res = await axios.patch(
-                `${baseUrl}/api/prestadores/${prestadorData.id}/dados-pessoais`,
-                values,
-            );
-            const { prestador } = res.data;
-            setPrestadorData({ ...prestador });
-
-            toast.success('sucesso');
-
-            setLoading(false);
-            setFormState(2);
-        } catch (e) {
-            console.log(e);
-            toast.error('algo deu errado \n tente novamente em alguns minutos');
-        }
-        setFormState(2);
-    }
-
-    const [enderecoLoading, setEnderecoLoading] = useState(false)
-
-    async function onSubmitDadosDoEndereco(values) {
-        console.log(values);
-
-        setLoading(true);
-
-        try {
-            const res = await axios.patch(
-                `${baseUrl}/api/prestadores/${prestadorData.id}/dados-endereco`,
-                values,
-            );
-            const { prestador } = res.data;
-            setPrestadorData({ ...prestador });
-
-            setLoading(false);
-            toast.success('sucesso');
-            setFormState(3);
-
-        } catch (e) {
-            console.log(e);
-            setLoading(false);
-            toast.error('erro');
-        }
-    }
-
-    async function onSubmitVeiculoForm(values) {
-        setLoading(true);
-
-        try {
-            const res = await axios.patch(
-                `${baseUrl}/api/prestadores/${prestadorData.id}/dados-veiculo`,
-                values,
-            );
-
-            const { prestador } = res.data;
-            setPrestadorData({ ...prestador });
-
-            setLoading(false);
-            toast.success('sucesso');
-            setFormState(4);
+            // setFormState(4);
         } catch (e) {
             console.log(e);
             setLoading(false);
@@ -181,14 +147,14 @@ const CadastroPrestadorPage = () => {
                 <li className={`step ${formState >= 3 ? 'step-primary' : ''} `}>
                     Dados do veiculo
                 </li>
-                <li className={`step ${formState >= 4 ? 'step-primary' : ''} `}>
-                    Foto de perfil
-                </li>
+                {/*<li className={`step ${formState >= 4 ? 'step-primary' : ''} `}>*/}
+                {/*    Foto de perfil*/}
+                {/*</li>*/}
             </ul>
 
             {/*<div className="divider"></div>*/}
             {formState === 0 ? (
-                <DadosDeAutenticacaoForm
+                <DadosDeAutenticacaoPrestadorForm
                     onSubmit={onSubmitAuthForm}
                     loading={loading}
                 />
@@ -216,13 +182,13 @@ const CadastroPrestadorPage = () => {
                     prestadorData={prestadorData}
                 />
             ) : null}
-            {formState === 4 ? (
-                <FotoDePerfilForm
-                    onSubmit={onSubmitFotoPerfilForm}
-                    handleBack={handleBackButton}
-                    prestadorData={prestadorData}
-                />
-            ) : null}
+            {/*{formState === 4 ? (*/}
+            {/*    <FotoDePerfilForm*/}
+            {/*        onSubmit={onSubmitFotoPerfilForm}*/}
+            {/*        handleBack={handleBackButton}*/}
+            {/*        prestadorData={prestadorData}*/}
+            {/*    />*/}
+            {/*) : null}*/}
         </div>
     );
 };

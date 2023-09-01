@@ -6,10 +6,10 @@ import { useEffect } from 'react';
 const categoriasCNH = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 const dadosPessoaisSchema = yup.object({
-    nomeCompleto: yup.string().min(6).required(),
-    cpf: yup.string().min(11).max(11).required(),
+    nome: yup.string().min(6).required(),
+    // cpf: yup.string().min(11).max(11).required(),
     ddd: yup.string().length(2).required(),
-    celular: yup
+    telefone: yup
         .string()
         .required('Insira seu telefone')
         .min(10, 'verifique seu número de telefone'),
@@ -32,11 +32,8 @@ const DadosPessoaisForm = ({
     prestadorData,
     loading,
 }) => {
-    useEffect(() => {
-        console.log(prestadorData);
-    }, [prestadorData]);
 
-    const { nome, cpf, telefone, cnh, categoriaCNH, ddd } = prestadorData;
+    const { nome, telefone, cnh, categoriaCNH, ddd } = prestadorData;
 
     const {
         register,
@@ -60,43 +57,45 @@ const DadosPessoaisForm = ({
                         <span className="label-text">Nome completo</span>
                     </label>
 
-                    <p className={'text-red-500'}>
-                        {errors?.nomeCompleto?.message}
-                    </p>
-
                     <input
                         defaultValue={nome ? nome : ''}
-                        name="nomeCompleto"
-                        id="nomeCompleto"
-                        {...register('nomeCompleto')}
+                        name="nome"
+                        id="nome"
+                        {...register('nome')}
                         type="text"
                         placeholder={'nome completo'}
                         className="input input-bordered w-full max-w-xs"
                     />
+
+                    {errors?.nome ? (
+                        <p className={'text-red-500'}>
+                            {errors?.nome?.message}
+                        </p>
+                    ) : null}
                 </div>
 
-                <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                        <span className="label-text">
-                            CPF{' '}
-                            <span className={'text-sm font-light'}>
-                                (apenas numeros)
-                            </span>
-                        </span>
-                    </label>
+                {/*<div className="form-control w-full max-w-xs">*/}
+                {/*    <label className="label">*/}
+                {/*        <span className="label-text">*/}
+                {/*            CPF{' '}*/}
+                {/*            <span className={'text-sm font-light'}>*/}
+                {/*                (apenas numeros)*/}
+                {/*            </span>*/}
+                {/*        </span>*/}
+                {/*    </label>*/}
 
-                    <p className={'text-red-500'}>{errors?.cpf?.message}</p>
+                {/*    <p className={'text-red-500'}>{errors?.cpf?.message}</p>*/}
 
-                    <input
-                        defaultValue={cpf ? cpf : ''}
-                        name="cpf"
-                        id="cpf"
-                        {...register('cpf')}
-                        type="text"
-                        placeholder={'CPF'}
-                        className="input input-bordered w-full max-w-xs"
-                    />
-                </div>
+                {/*    <input*/}
+                {/*        defaultValue={cpf ? cpf : ''}*/}
+                {/*        name="cpf"*/}
+                {/*        id="cpf"*/}
+                {/*        {...register('cpf')}*/}
+                {/*        type="text"*/}
+                {/*        placeholder={'CPF'}*/}
+                {/*        className="input input-bordered w-full max-w-xs"*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 <div className={'flex gap-2 w-full max-w-xs'}>
                     <div className="form-control basis-1/4 max-w-xs">
@@ -130,9 +129,9 @@ const DadosPessoaisForm = ({
 
                         <input
                             defaultValue={telefone ? telefone : ''}
-                            name="celular"
-                            id="celular"
-                            {...register('celular')}
+                            name="telefone"
+                            id="telefone"
+                            {...register('telefone')}
                             type="text"
                             className="input input-bordered w-full max-w-xs"
                             placeholder="91234-1234"
@@ -142,9 +141,9 @@ const DadosPessoaisForm = ({
                             }}
                             maxLength={10}
                         />
-                        {errors?.celular ? (
+                        {errors?.telefone ? (
                             <p className={'text-red-500'}>
-                                {errors?.celular?.message}
+                                {errors?.telefone?.message}
                             </p>
                         ) : null}
                     </div>

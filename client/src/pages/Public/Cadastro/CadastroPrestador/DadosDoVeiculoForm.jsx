@@ -28,7 +28,6 @@ const DadosDoVeiculoForm = ({
     prestadorData,
     loading,
 }) => {
-    const { tipoDoVeiculo, tipoDaCarroceria, anoDeFabricacao } = prestadorData;
 
     const {
         register,
@@ -54,7 +53,7 @@ const DadosDoVeiculoForm = ({
 
                     <select
                         className="select select-bordered"
-                        defaultValue={tipoDoVeiculo ? tipoDoVeiculo : ''}
+                        defaultValue={prestadorData?.tipoDoVeiculo ? prestadorData?.tipoDoVeiculo : ''}
                         {...register('tipoVeiculo')}
                         id={'tipoVeiculo'}
                         name={'tipoVeiculo'}
@@ -102,7 +101,7 @@ const DadosDoVeiculoForm = ({
 
                     <select
                         className="select select-bordered"
-                        defaultValue={tipoCarroceria ? tipoDaCarroceria : ''}
+                        defaultValue={prestadorData?.tipoCarroceria ? prestadorData?.tipoDaCarroceria : ''}
                         {...register('tipoCarroceria')}
                         id={'tipoCarroceria'}
                         name={'tipoCarroceria'}
@@ -149,7 +148,7 @@ const DadosDoVeiculoForm = ({
 
                     <select
                         className="select select-bordered"
-                        defaultValue={anoDeFabricacao ? anoDeFabricacao : ''}
+                        defaultValue={prestadorData?.anoDeFabricacao ? prestadorData?.anoDeFabricacao : ''}
                         {...register('anoDeFabricacao')}
                         id={'anoDeFabricacao'}
                         name={'anoDeFabricacao'}
@@ -176,6 +175,7 @@ const DadosDoVeiculoForm = ({
                 <div className="flex justify-between gap-8 mt-4">
                     <button
                         className={'btn btn-neutral'}
+                        type={"button"}
                         onClick={handleBack}
                         disabled={loading}
                     >

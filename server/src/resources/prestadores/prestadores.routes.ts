@@ -2,6 +2,7 @@ import { Router } from "express";
 import {prestadoresController} from "./prestadores.controller";
 import { validateDataSchemaAndStoreInResLocals } from '../common/middleware/validateSchema.middleware';
 import {
+    CheckEmailECpfSchema, CreatePrestadorSchema,
     UpdateDadosDoEnderecoSchema,
     UpdateDadosDoVeiculoSchema,
     UpdateDadosPessoaisSchema, UpdateFotoDePerfilSchema
@@ -11,7 +12,8 @@ import { validateToken } from '../auth/auth.middleware';
 
 const prestadoresRouter = Router()
 
-prestadoresRouter.post('/create', validateDataSchemaAndStoreInResLocals(RegisterSchema, 'registerData'), prestadoresController.createPrestador)
+prestadoresRouter.post('/check-create', validateDataSchemaAndStoreInResLocals(CheckEmailECpfSchema, 'EmailECpfData'), prestadoresController.checkEmailECpf)
+prestadoresRouter.post('/create', validateDataSchemaAndStoreInResLocals(CreatePrestadorSchema, 'registerData'), prestadoresController.createPrestador)
 prestadoresRouter.patch('/:prestadorId/dados-pessoais', validateToken, validateDataSchemaAndStoreInResLocals(UpdateDadosPessoaisSchema, 'dadosPessoaisData'), prestadoresController.updateDadosPessoais)
 prestadoresRouter.patch('/:prestadorId/dados-veiculo', validateToken, validateDataSchemaAndStoreInResLocals(UpdateDadosDoVeiculoSchema, 'dadosDoVeiculoData'), prestadoresController.updateDadosDoVeiculo)
 prestadoresRouter.patch('/:prestadorId/dados-endereco', validateToken, validateDataSchemaAndStoreInResLocals(UpdateDadosDoEnderecoSchema, 'dadosDoEnderecoData'), prestadoresController.updateDadosDoEndereco)

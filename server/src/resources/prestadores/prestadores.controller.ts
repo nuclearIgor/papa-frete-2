@@ -1,12 +1,27 @@
 import {NextFunction, Request, Response} from "express";
 import {prestadoresService} from "./prestadores.service";
 
+async function checkEmailECpf (req: Request, res: Response, next: NextFunction) {
+    const { EmailECpfData } = res.locals
+
+    try {
+        const errors = await prestadoresService.checkEmailECpf(EmailECpfData)
+
+        if (!errors) {
+            return res.sendStatus(204)
+        }
+        return res.json({ errors })
+    } catch (e) {
+        next(e)
+    }
+}
+
 async function createPrestador (req: Request, res: Response, next: NextFunction) {
     const { registerData } = res.locals
 
     try {
         const prestador = await prestadoresService.createPrestador(registerData)
-        return res.json({ prestador })
+        return res.status(201).json({ prestador })
     } catch (e) {
         next(e)
     }
@@ -91,6 +106,7 @@ async function updateFotoDePerfilData (req: Request, res: Response) {
 }
 
 export const prestadoresController = {
+    checkEmailECpf,
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,

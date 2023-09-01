@@ -1,18 +1,50 @@
-import {UpdateDadosDoEnderecoDTO, UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO} from "./prestadores.protocols";
+import {
+    CheckEmailECpfDTO, CreatePrestadorDTO,
+    UpdateDadosDoEnderecoDTO,
+    UpdateDadosDoVeiculoDTO,
+    UpdateDadosPessoaisDTO
+} from "./prestadores.protocols";
 import {prestadorRepository} from "./prestadores.repository";
 import {RegisterDTO} from "../users/user.protocols";
 import {userService} from "../users/users.service";
 import {ApplicationError} from "../common/applicationError";
+import {userRepository} from "../users/users.repository";
 
-async function createPrestador({email, senha, tipoDeConta}: RegisterDTO) {
-    const user = await userService.createUser({email, senha, tipoDeConta})
-
+async function createPrestador(data: CreatePrestadorDTO) {
     try {
-        return await prestadorRepository.createPrestador(user.id)
+        const user = await userService.createUser({
+            email: data.email,
+            senha: data.senha,
+            tipoDeConta: data.tipoDeConta
+        })
+
+        return await prestadorRepository.createPrestador(user.id, data)
     } catch (e: any) {
         throw new ApplicationError(e.message, 400)
     }
 }
+
+async function checkEmailECpf ({email, cpf}: CheckEmailECpfDTO) {
+    try {
+        const [user, prestador] = await Promise.all([
+            userRepository.getUserByEmail(email),
+            prestadorRepository.getPrestadorByCpf(cpf)
+        ])
+
+        if (user) {
+            throw new ApplicationError('email ja em uso', 409)
+        }
+
+        if (prestador) {
+            throw new ApplicationError('cpf ja em uso', 409)
+        }
+
+        return null
+    } catch (e: any) {
+        throw new ApplicationError(e.message, 400)
+    }
+}
+
 
 async function updateDadosPessoais(data: UpdateDadosPessoaisDTO, prestadorId: string, userId: string) {
 
@@ -89,6 +121,7 @@ async function updateFotoDePerfilData (fotoData: string, prestadorId: string) {
 }
 
 export const prestadoresService = {
+    checkEmailECpf,
     createPrestador,
     updateDadosPessoais,
     updateDadosDoVeiculo,

@@ -1,5 +1,10 @@
 import { prisma } from "../../../database";
-import {UpdateDadosDoVeiculoDTO, UpdateDadosPessoaisDTO, UpdateDadosDoEnderecoDTO} from "./prestadores.protocols";
+import {
+    UpdateDadosDoVeiculoDTO,
+    UpdateDadosPessoaisDTO,
+    UpdateDadosDoEnderecoDTO,
+    CreatePrestadorDTO
+} from "./prestadores.protocols";
 
 async function updateDadosPessoais ({nomeCompleto, ddd, celular, categoriaCNH}: UpdateDadosPessoaisDTO, prestadorId: string) {
     return prisma.prestador.update({
@@ -23,7 +28,7 @@ async function updateDadosPessoais ({nomeCompleto, ddd, celular, categoriaCNH}: 
     })
 }
 
-async function findByCpf(cpf: string) {
+async function getPrestadorByCpf (cpf: string) {
     return prisma.prestador.findUnique({
         where: {
             cpf
@@ -31,14 +36,34 @@ async function findByCpf(cpf: string) {
     })
 }
 
-async function createPrestador(userId: string) {
+async function createPrestador(userId: string, data: CreatePrestadorDTO) {
     return prisma.prestador.create({
         data: {
             user: {
                 connect: {
                     id: userId
                 }
-            }
+            },
+            cpf: data.cpf,
+            cnh: data.cnh,
+            categoriaCNH: data.categoriaCNH,
+
+            nome: data.nome,
+            ddd: data.ddd,
+            telefone: data.telefone,
+
+            cep: data.cep,
+            estado: data.uf,
+            cidade: data.localidade,
+            bairro: data.bairro,
+            rua: data.logradouro,
+            numero: data.numero,
+            complemento: data.complemento,
+
+            tipoDoVeiculo: data.tipoVeiculo,
+            tipoDaCarroceria: data.tipoCarroceria,
+            anoDeFabricacaoDoVeiculo: data.anoDeFabricacao,
+
         }
     })
 }
@@ -110,7 +135,7 @@ export const prestadorRepository = {
     updateDadosPessoais,
     updateDadosDoVeiculo,
     updateDadosDoEndereco,
-    findByCpf,
+    getPrestadorByCpf,
     getPrestadorByUserId,
     getPrestadorById,
     updateFotoDePerfilData

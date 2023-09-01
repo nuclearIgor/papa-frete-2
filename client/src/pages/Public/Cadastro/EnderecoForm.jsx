@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,7 +14,7 @@ const endereçoSchema = yup.object({
     complemento: yup.string(),
 });
 
-const DadosDoEnderecoForm = ({ onSubmit, handleBack, loading, setLoading }) => {
+const DadosDoEnderecoForm = ({prestadorData, onSubmit, handleBack, loading, setLoading }) => {
     const {
         register,
         handleSubmit,
@@ -32,6 +32,22 @@ const DadosDoEnderecoForm = ({ onSubmit, handleBack, loading, setLoading }) => {
     const [visibilidadeEndereco, setVisibilidadeEndereco] = useState(false);
 
     const [cepError, setCepError] = useState(false);
+
+    useEffect(() => {
+        if (!prestadorData.cep) {
+            return
+        }
+        const cep = document.getElementById('cep')
+        cep.value = String(prestadorData?.cep).replace("-", "")
+        setCepData({
+            bairro: prestadorData?.bairro,
+            cep: prestadorData?.cep,
+            uf: prestadorData?.estado,
+            localidade: prestadorData?.cidade,
+            logradouro: prestadorData?.rua,
+        })
+        setVisibilidadeEndereco(true)
+    }, [])
     const buscaCep = async () => {
         setLoading(true);
 
@@ -66,6 +82,7 @@ const DadosDoEnderecoForm = ({ onSubmit, handleBack, loading, setLoading }) => {
             delete data.complemento;
 
             setCepData(data);
+            // console.log('busca cep: \n', data)
             setVisibilidadeEndereco(true);
             setLoading(false);
         } catch (e) {
@@ -281,6 +298,7 @@ const DadosDoEnderecoForm = ({ onSubmit, handleBack, loading, setLoading }) => {
                 <div className="flex justify-between gap-8 mt-4">
                     <button
                         className={'btn btn-neutral'}
+                        type={"button"}
                         onClick={handleBack}
                         disabled={loading}
                     >
